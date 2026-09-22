@@ -69,10 +69,12 @@
 
     const setHook = (text, instant) => {
       // cada palabra en su máscara; *texto* se muestra en itálica
-      const toks = []; let em = false;
+      const toks = []; let em = false, prevSpace = true;
       text.split(/(\*)/).forEach((part) => {
         if (part === "*") { em = !em; return; }
-        const glue = toks.length && part && !/^\s/.test(part);
+        if (!part) return;
+        const glue = toks.length && !prevSpace && !/^\s/.test(part);
+        prevSpace = /\s$/.test(part);
         part.split(/\s+/).filter(Boolean).forEach((word, k) => {
           const piece = `${em ? "<em>" : ""}${esc(word)}${em ? "</em>" : ""}`;
           if (k === 0 && glue) toks[toks.length - 1] += piece; else toks.push(piece);
@@ -334,7 +336,7 @@
             <span class="go">Ir al podcast ${I.right}</span>
           </a>
           <a class="rv rv-d2" href="${R(`investigacion/#d-${w.disciplina}`)}">
-            <span class="k">Investigación</span><h4>${esc(d.nombre)}</h4>
+            <span class="k">Investigación</span><h4>${esc(d.titulo)}</h4>
             <p>${esc(d.texto.split(". ").slice(0, 2).join(". "))}.</p>
             <span class="go">Ver los datos ${I.right}</span>
           </a>
@@ -396,14 +398,21 @@
 
     // Gráfico dumbbell
     const box = $("[data-dumbbell]");
-    const X0 = 190, X1 = 940, rowH = 50, top = 30, max = 55;
+    let compactMode = null;
+    const render = () => {
+    const compact = box.clientWidth < 620;
+    if (compact === compactMode) return;
+    compactMode = compact;
+    // En pantallas angostas: etiquetas arriba y el eje a todo el ancho
+    const VW = compact ? 420 : 980, X0 = compact ? 12 : 190, X1 = compact ? 380 : 940, rowH = compact ? 70 : 50, top = 30, max = 55;
     const x = (v) => X0 + (v / max) * (X1 - X0);
     const H = top + D.length * rowH + 30;
-    let svg = `<svg viewBox="0 0 980 ${H}" role="img" aria-label="Participación de mujeres graduadas por especialidad en Colombia">`;
+    let svg = `<svg class="${compact ? "compact" : ""}" viewBox="0 0 ${VW} ${H}" role="img" aria-label="Participación de mujeres graduadas por especialidad en Colombia">`;
     [0, 10, 20, 30, 40, 50].forEach((t) => { svg += `<line class="grid" x1="${x(t)}" x2="${x(t)}" y1="${top - 10}" y2="${H - 26}"/><text class="axis" x="${x(t)}" y="${H - 8}" text-anchor="middle">${t} %</text>`; });
     svg += `<line class="parity" x1="${x(50)}" x2="${x(50)}" y1="${top - 18}" y2="${H - 26}"/><text class="parity-t" x="${x(50) - 6}" y="${top - 18}" text-anchor="end">PARIDAD</text>`;
     D.forEach((d, i) => {
-      const y = top + i * rowH + rowH / 2;
+      const yRow = top + i * rowH + rowH / 2;
+      const y = compact ? yRow + 12 : yRow;
       let marks = "";
       if (d.start && d.end) {
         marks += `<line class="conn" x1="${x(d.start[1])}" x2="${x(d.end[1])}" y1="${y}" y2="${y}"/>`;
@@ -421,10 +430,17 @@
         marks += `<text class="val" x="${x(0) + 4}" y="${y + 4}" style="font-style:italic;fill:var(--muted)">sin cifra en el libro</text>`;
       }
       if (d.extra) marks += `<rect x="${x(d.extra.v) - 5}" y="${y - 5}" width="10" height="10" fill="var(--gold)" stroke="var(--paper)" stroke-width="2" transform="rotate(45 ${x(d.extra.v)} ${y})"/>`;
-      svg += `<g class="row" data-id="${d.id}" tabindex="0"><rect class="row-bg" x="0" y="${y - rowH / 2}" width="980" height="${rowH}"/><text class="lab" x="0" y="${y - 2}">${esc(d.nombre)}</text><text class="lab2" x="0" y="${y + 14}">${esc(W(d.w).corto.toUpperCase())}</text>${marks}</g>`;
+      const labels = compact
+        ? `<text class="lab" x="${X0}" y="${yRow - 14}">${esc(d.nombre)} <tspan class="lab2">· ${esc(W(d.w).corto.toUpperCase())}</tspan></text>`
+        : `<text class="lab" x="0" y="${y - 2}">${esc(d.nombre)}</text><text class="lab2" x="0" y="${y + 14}">${esc(W(d.w).corto.toUpperCase())}</text>`;
+      svg += `<g class="row" data-id="${d.id}" tabindex="0"><rect class="row-bg" x="0" y="${yRow - rowH / 2}" width="${VW}" height="${rowH}"/>${labels}${marks}</g>`;
     });
     svg += `</svg>`;
     box.innerHTML = svg;
+    bindRows();
+    if (currentSel) $$(".row", box).forEach((r) => r.classList.toggle("on", r.dataset.id === currentSel));
+    };
+    let currentSel = null;
 
     const tip = document.createElement("div"); tip.className = "chart-tip"; document.body.append(tip);
     const tipText = (d) => {
@@ -437,19 +453,24 @@
     const detail = $("[data-spec-detail]");
     const select = (id, scroll) => {
       const d = D.find((q) => q.id === id); if (!d) return;
+      currentSel = id;
       $$(".row", box).forEach((r) => r.classList.toggle("on", r.dataset.id === id));
       const w = W(d.w);
-      detail.innerHTML = `<div><span class="eyebrow">Especialidad</span><h4 style="margin-top:12px">Ingeniería ${esc(d.nombre)}</h4><p>${esc(d.texto)}</p></div>
+      detail.innerHTML = `<div><span class="eyebrow">Especialidad</span><h4 style="margin-top:12px">${esc(d.titulo)}</h4><p>${esc(d.texto)}</p></div>
         <div class="who"><img src="${IMG(w.slug, w.card, true)}" alt=""><div><p>${esc(d.ella)}</p><a class="link" href="${R(`mujeres/${w.slug}/`)}">Conoce a ${esc(w.corto)} ${I.arr}</a></div></div>`;
       if (scroll) $("#especialidades").scrollIntoView({ behavior: "smooth" });
     };
-    $$(".row", box).forEach((r) => {
-      const d = D.find((q) => q.id === r.dataset.id);
-      r.addEventListener("mousemove", (e) => { tip.innerHTML = tipText(d); tip.classList.add("on"); const tx = Math.min(e.clientX + 16, innerWidth - 280); tip.style.left = tx + "px"; tip.style.top = e.clientY + 16 + "px"; });
-      r.addEventListener("mouseleave", () => tip.classList.remove("on"));
-      r.addEventListener("click", () => select(d.id));
-      r.addEventListener("keydown", (e) => { if (e.key === "Enter") select(d.id); });
-    });
+    function bindRows() {
+      $$(".row", box).forEach((r) => {
+        const d = D.find((q) => q.id === r.dataset.id);
+        r.addEventListener("mousemove", (e) => { tip.innerHTML = tipText(d); tip.classList.add("on"); const tx = Math.min(e.clientX + 16, innerWidth - 280); tip.style.left = tx + "px"; tip.style.top = e.clientY + 16 + "px"; });
+        r.addEventListener("mouseleave", () => tip.classList.remove("on"));
+        r.addEventListener("click", () => select(d.id));
+        r.addEventListener("keydown", (e) => { if (e.key === "Enter") select(d.id); });
+      });
+    }
+    render();
+    window.addEventListener("resize", render);
     const fromHash = (location.hash.match(/^#d-(.+)/) || [])[1];
     select(fromHash || "sistemas", !!fromHash);
     window.addEventListener("hashchange", () => { const h = (location.hash.match(/^#d-(.+)/) || [])[1]; if (h) select(h, true); });
@@ -521,7 +542,7 @@
             : `<a class="slot-card" href="${R(`mujeres/${w.slug}/#acto-${actN}`)}" title="Búscalo en el acto ${s.act} de su historia"><span class="no">${w.no}·${i + 1}</span><span class="tt">Acto ${s.act}</span></a>`;
         }).join("");
         const reward = done
-          ? `<div class="reward open"><h4>Desbloqueado: Ingeniería ${esc(d.nombre)}</h4><p>${esc(d.texto)}</p><p><em>${esc(MDP.unlocks[w.slug])}</em></p><a class="link" href="${R(`investigacion/#d-${d.id}`)}">Ver en la investigación ${I.arr}</a></div>`
+          ? `<div class="reward open"><h4>Desbloqueado: ${esc(d.titulo)}</h4><p>${esc(d.texto)}</p><p><em>${esc(MDP.unlocks[w.slug])}</em></p><a class="link" href="${R(`investigacion/#d-${d.id}`)}">Ver en la investigación ${I.arr}</a></div>`
           : `<div class="reward locked">${I.lock.replace('class="lock"', "")}Completa los ${list.length} momentos de ${esc(w.corto)} para desbloquear la ficha de su ingeniería y lo que no cabe en el libro.</div>`;
         return `<article class="a-page rv" style="--c:${w.color};--p:${got / list.length}">
           <div class="a-head"><div><h3>${esc(w.corto)}</h3><div class="p">${esc(w.profesion)} · ${esc(w.palabra)}</div></div><div class="c"><b>${got}</b> / ${list.length}</div></div>

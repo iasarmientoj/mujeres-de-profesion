@@ -78,7 +78,8 @@
     const cur = document.body.dataset.nav;
     const links = NAV.map(([h, l, k]) => `<a href="${R(h)}"${cur === k ? ' aria-current="page"' : ""}>${l}</a>`).join("");
     const header = document.createElement("header");
-    header.className = "site-header" + (document.body.dataset.header === "invert" ? " invert" : "");
+    const hmode = document.body.dataset.header || (document.body.dataset.page === "perfil" ? "solid" : "");
+    header.className = "site-header" + (hmode ? " " + hmode : "");
     header.id = "hdr";
     header.innerHTML = `
       <div class="wrap">
@@ -168,15 +169,24 @@
     $$("[data-stepline]", root).forEach((el) => { if (!el.dataset.done) { el.insertAdjacentHTML("afterbegin", stepline("draw " + (el.dataset.stepline || ""))); el.dataset.done = 1; } });
     const els = $$(".rv, .rv-img, .stepline.draw, .split-line, [data-count-to]", root).filter((e) => !e.classList.contains("in"));
     if (!("IntersectionObserver" in window)) { els.forEach((e) => e.classList.add("in")); return; }
+    // Los elementos con clip-path total no "intersectan": se observa su contenedor.
+    const map = new Map();
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {
         if (!en.isIntersecting) return;
-        en.target.classList.add("in");
-        if (en.target.dataset.countTo) countUp(en.target);
+        (map.get(en.target) || []).forEach((t) => {
+          t.classList.add("in");
+          if (t.dataset.countTo) countUp(t);
+        });
         io.unobserve(en.target);
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
-    els.forEach((e) => io.observe(e));
+    els.forEach((e) => {
+      const watch = e.classList.contains("rv-img") ? e.parentElement : e;
+      if (!map.has(watch)) map.set(watch, []);
+      map.get(watch).push(e);
+      io.observe(watch);
+    });
   }
   function countUp(el) {
     const to = parseFloat(el.dataset.countTo), dec = +(el.dataset.dec || 0), dur = 1600, t0 = performance.now();
@@ -447,7 +457,9 @@
       const pz = $("[data-pz]", body);
       const im = new Image();
       im.onload = () => {
+        const ar = im.naturalWidth / im.naturalHeight;
         pz.style.aspectRatio = `${im.naturalWidth} / ${im.naturalHeight}`;
+        pz.style.width = `min(100%, 380px, ${(46 * ar).toFixed(1)}vh)`;
         let order = [...Array(9).keys()];
         do { order.sort(() => Math.random() - 0.5); } while (order.every((v, i) => v === i) || order.filter((v, i) => v === i).length > 3);
         let sel = null;

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /qr
+Sitemap: https://mujeresdeprofesion.com/sitemap.xml
