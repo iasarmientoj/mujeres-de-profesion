@@ -44,7 +44,7 @@ MDP.women = [
     profesion: "Ingeniera Electrónica", profesionEn: "Electronic Engineer",
     disciplina: "electronica", palabra: "Abrir camino", color: "#51698c",
     intereses: ["deporte"], hobby: "Triatlón", paginasLibro: "9 – 15",
-    hero: { img: "hobby-3", pos: "50% 30%" }, card: "hobby-5", cardPos: "40% 30%",
+    hero: { img: "home-2", pos: "50% 32%" }, card: "hobby-5", cardPos: "40% 30%",
     intro: [
       "Hay caminos que se recorren con la cabeza y otros con el cuerpo. Lorena conoce los dos: en la ingeniería encuentra el desafío de resolver; en el triatlón, el de resistir.",
       "En ambos ha aprendido que avanzar también significa sostenerse cuando el camino se hace difícil."
@@ -88,7 +88,7 @@ MDP.women = [
     profesion: "Ingeniera Mecatrónica", profesionEn: "Mechatronics Engineer",
     disciplina: "mecatronica", palabra: "Persistir", color: "#8a5b43",
     intereses: ["lectura"], hobby: "Lectura", paginasLibro: "17 – 23",
-    hero: { img: "hobby-2", pos: "50% 25%" }, card: "hobby-2", cardPos: "50% 25%",
+    hero: { img: "home-1", pos: "50% 30%" }, card: "hobby-2", cardPos: "50% 25%",
     intro: [
       "Hay territorios profesionales que todavía parecen pertenecer a otros.",
       "Diana trabaja entre la mecánica automotriz y la electrónica, aportando una mirada real sobre las mujeres en un campo tradicionalmente masculino."
@@ -126,7 +126,7 @@ MDP.women = [
     profesion: "Ingeniera Comercial", profesionEn: "Commercial Engineer",
     disciplina: "comercial", palabra: "Liderar sin perderse", color: "#6f5f8e",
     intereses: ["deporte"], hobby: "Tenis", paginasLibro: "25 – 31",
-    hero: { img: "hobby-2", pos: "50% 25%" }, card: "hobby-2", cardPos: "50% 20%",
+    hero: { img: "home-2", pos: "50% 28%" }, card: "hobby-2", cardPos: "50% 20%",
     intro: [
       "Liderar también es saber cuándo golpear, cuándo esperar y cuándo cambiar la estrategia.",
       "En el tenis, cada punto exige concentración, estrategia y capacidad para volver a empezar. En su profesión, María Cristina hace algo parecido: toma decisiones, lidera y construye nuevas posibilidades para la ingeniería."
@@ -165,7 +165,7 @@ MDP.women = [
     profesion: "Ingeniera de Minas", profesionEn: "Mining Engineer",
     disciplina: "minas", palabra: "Hacerse escuchar", color: "#3c4a42",
     intereses: ["servicio"], hobby: "Servicio en su iglesia", paginasLibro: "33 – 39",
-    hero: { img: "hobby-5", pos: "50% 30%" }, card: "contexto-4", cardPos: "50% 30%",
+    hero: { img: "home-2", pos: "50% 28%" }, card: "contexto-4", cardPos: "50% 30%",
     intro: [
       "Andrea es luz. En la oscuridad de las minas, en la oscuridad de las almas.",
       "De las entrañas de la tierra asciende para acompañar, compartir y servir en su iglesia. Dos mundos distintos unidos por una misma sustancia."
@@ -205,7 +205,7 @@ MDP.women = [
     profesion: "Ingeniera de Sistemas", profesionEn: "Systems Engineer",
     disciplina: "sistemas", palabra: "Reconocerse", color: "#a0804f",
     intereses: ["naturaleza"], hobby: "Caminatas", paginasLibro: "55 – 61",
-    hero: { img: "contexto-4", pos: "50% 30%" }, card: "contexto-4", cardPos: "50% 30%",
+    hero: { img: "home-1", pos: "50% 28%" }, card: "contexto-4", cardPos: "50% 30%",
     intro: [
       "En la tecnología imagina, conecta y transforma; en las caminatas encuentra el tiempo para observar. Dos maneras distintas de avanzar, una misma curiosidad por descubrir qué hay más adelante.",
       "Desde la innovación, ella construye su trayectoria en un sector donde hacer visible la experiencia de las mujeres también es transformar el futuro."
@@ -245,7 +245,7 @@ MDP.women = [
     profesion: "Ingeniera Mecánica", profesionEn: "Mechanical Engineer",
     disciplina: "mecanica", palabra: "Permanecer con propósito", color: "#46716e",
     intereses: ["deporte"], hobby: "Golf", paginasLibro: "63 – 69",
-    hero: { img: "hobby-2", pos: "50% 22%" }, card: "hobby-2", cardPos: "50% 20%",
+    hero: { img: "home-1", pos: "50% 26%" }, card: "hobby-2", cardPos: "50% 20%",
     intro: [
       "Entre máquinas, energía y decisiones, Milena aprendió a moverse con precisión.",
       "En el campo de golf, mientras practica, encuentra otro tipo de desafío: calcular la distancia, elegir el golpe y confiar en el siguiente movimiento."
@@ -285,7 +285,7 @@ MDP.women = [
     profesion: "Ingeniera Civil", profesionEn: "Civil Engineer",
     disciplina: "civil", palabra: "Abrirse paso", color: "#8e4a5c",
     intereses: ["arte"], hobby: "Danza árabe", paginasLibro: "71 – 77",
-    hero: { img: "hobby-5", pos: "35% 30%" }, card: "hobby-5", cardPos: "30% 30%",
+    hero: { img: "home-1", pos: "42% 38%" }, card: "hobby-5", cardPos: "30% 30%",
     intro: [
       "Construir y bailar parecen mundos distintos. Pero ambos exigen equilibrio, precisión y confianza.",
       "Mientras estamos con Claudia María, ella trabaja con estructuras, caminos y territorios. Fuera de estos, encuentra en la danza árabe otra manera de habitar el cuerpo y el movimiento."
@@ -324,7 +324,7 @@ MDP.women = [
     profesion: "Geóloga", profesionEn: "Geologist",
     disciplina: "geologia", palabra: "Leer el terreno", color: "#66764a",
     intereses: ["deporte", "naturaleza"], hobby: "Escalada", paginasLibro: "79 – 85",
-    hero: { img: "contexto-3", pos: "50% 25%" }, card: "contexto-3", cardPos: "50% 20%",
+    hero: { img: "home-1", pos: "50% 30%" }, card: "contexto-3", cardPos: "50% 20%",
     intro: [
       "Conocer la Tierra también es conquistar nuevos lugares para una profesión.",
       "Jessica estudia la Tierra y trabaja anticipándose a sus riesgos. La acompañamos a escalar y la vimos escogiendo el muro, reconociendo dificultades, roca, altura, equilibrio y marcando una ruta."
