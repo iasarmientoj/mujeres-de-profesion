@@ -71,7 +71,8 @@
     ["mujeres/", "Mujeres", "mujeres"],
     ["podcast/", "Podcast", "podcast"],
     ["album/", "Álbum", "album"],
-    ["libro/", "Libro", "libro"]
+    ["libro/", "Libro", "libro"],
+    ["exposicion/", "Exposición", "exposicion"]
   ];
 
   function renderHeader() {
@@ -140,7 +141,7 @@
         <div class="f-top">
           <div class="f-logo">
             <img src="${R("assets/brand/logo-dark.png")}" alt="Mujeres de Profesión" width="1000" height="460">
-            <p>Un fotolibro, una investigación y un podcast sobre ocho mujeres que trabajan en ingeniería y geociencias en Colombia.</p>
+            <p>Proyecto transmedia sobre ocho mujeres que trabajan en ingeniería y geociencias en Colombia: fotolibro, investigación de la Universidad Nacional y su grupo de investigación, podcast y exposición fotográfica.</p>
           </div>
           <div>
             <h5>Explora</h5>

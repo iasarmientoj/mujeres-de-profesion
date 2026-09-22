@@ -138,6 +138,13 @@
     const grid = $("[data-women-grid]");
     if (grid) grid.innerHTML = MDP.women.map(womanCard).join("");
 
+    // Teaser de la exposición: próximo evento o fechas de la exposición
+    const ex = $("[data-expo-teaser]");
+    if (ex) {
+      const { next } = agendaSplit();
+      ex.textContent = next.length ? `Próximo: ${next[0].titulo} · ${next[0].fecha.split("-").reverse().join("/")}` : (MDP.exposicion.fechas || "Fechas próximamente");
+    }
+
     // Teaser del álbum
     const at = $("[data-album-teaser]");
     if (at) {
@@ -496,6 +503,8 @@
      PODCAST
      ========================================================= */
   P.podcast = function () {
+    const intro = $("[data-pod-intro]");
+    if (intro) intro.innerHTML = MDP.podcastIntro.map((p, i) => `<p class="${i ? "rv rv-d" + i : "lead rv"}">${esc(p)}</p>`).join("");
     const list = $("[data-episodes]");
     const complete = Store.count() === Store.total();
     const wave = () => Array.from({ length: 70 }, () => `<i style="height:${15 + Math.random() * 85}%"></i>`).join("");
@@ -615,6 +624,52 @@
       </div></div>`;
     const card = $(".qr-card"); void card.offsetWidth; card.classList.add("in");
     A.updateCount();
+  };
+
+  /* =========================================================
+     AGENDA (compartida por Exposición e Inicio)
+     ========================================================= */
+  const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  const today = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+  const parseDate = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const agendaSplit = () => {
+    const ev = (MDP.agenda || []).filter((e) => e.fecha).slice().sort((a, b) => a.fecha.localeCompare(b.fecha));
+    return { next: ev.filter((e) => parseDate(e.fecha) >= today()), past: ev.filter((e) => parseDate(e.fecha) < today()).reverse() };
+  };
+  const eventRow = (e, past) => {
+    const d = parseDate(e.fecha);
+    return `<article class="event rv${past ? " past" : ""}">
+      <div class="ev-date"><b>${d.getDate()}</b><span>${MESES[d.getMonth()]} ${d.getFullYear()}</span></div>
+      <div class="ev-body"><span class="ev-type">${esc(e.tipo || "Evento")}${e.hora ? " · " + esc(e.hora) : ""}</span>
+        <h3>${esc(e.titulo)}</h3>${e.lugar ? `<p class="ev-place">${esc(e.lugar)}</p>` : ""}${e.desc ? `<p>${esc(e.desc)}</p>` : ""}</div>
+      <div class="ev-go">${e.url && !past ? `<a class="btn sm" href="${esc(e.url)}" target="_blank" rel="noopener">Inscribirme ${I.arr}</a>` : ""}</div>
+    </article>`;
+  };
+
+  /* =========================================================
+     EXPOSICIÓN Y CHARLAS
+     ========================================================= */
+  P.exposicion = function () {
+    const X = MDP.exposicion;
+    $("[data-expo-text]").innerHTML = X.textos.map((t, i) => `<p class="${i === 0 ? "lead" : ""} rv${i ? " rv-d" + i : ""}">${esc(t)}</p>`).join("");
+    const facts = [["Lugar", `${X.lugar}<br><span class="muted">${X.institucion}</span>`], ["Fechas", X.fechas || "Próximamente"], ["Horario", X.horario || "Por confirmar"]];
+    $("[data-expo-facts]").innerHTML = facts.map(([k, v]) => `<div><span class="caps muted">${k}</span><p>${v}</p></div>`).join("") +
+      (X.mapa ? `<div><a class="link" href="${esc(X.mapa)}" target="_blank" rel="noopener">Cómo llegar ${I.arr}</a></div>` : "");
+
+    // Sala: marcos con las fotografías (los retratos B/N quedan velados, se ven en la sala)
+    const wall = $("[data-wall]");
+    wall.innerHTML = MDP.women.map((w, i) => {
+      const veiled = i % 3 === 1;
+      return `<figure class="frame rv rv-d${i % 4}${veiled ? " veil" : ""}" style="--c:${w.color}">
+        <div class="fr-img"><img src="${veiled ? IMG(w.slug, "retrato-velado") : IMG(w.slug, w.card, true)}" alt="${veiled ? "Retrato reservado para la sala" : esc(w.nombre)}" loading="lazy" style="object-position:${w.cardPos}">${veiled ? `<span class="fr-lock">${I.lock}<small>Se ve en la sala</small></span>` : ""}</div>
+        <figcaption><b>${esc(w.corto)}</b> · ${esc(w.profesion)}</figcaption></figure>`;
+    }).join("");
+
+    const { next, past } = agendaSplit();
+    $("[data-agenda]").innerHTML = next.length ? next.map((e) => eventRow(e)).join("")
+      : `<div class="event empty rv"><div class="ev-date"><b>—</b><span>próximamente</span></div><div class="ev-body"><span class="ev-type">Agenda</span><h3>Pronto anunciaremos fechas de charlas y talleres</h3><p>Mujeres de Profesión visita colegios, universidades y congresos con charlas como <em>Nuevas formas de divulgación en ciencia</em>. Vuelve pronto para ver dónde y cuándo.</p></div><div class="ev-go"></div></div>`;
+    const pastEl = $("[data-agenda-past]");
+    if (past.length) pastEl.innerHTML = `<h3 class="caps muted" style="margin:50px 0 10px">Eventos anteriores</h3>` + past.map((e) => eventRow(e, true)).join("");
   };
 
   /* =========================================================

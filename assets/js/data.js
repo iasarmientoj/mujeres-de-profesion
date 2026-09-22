@@ -455,6 +455,43 @@ MDP.podcast = [
     desc: "Lo que le dirían a una chica que está eligiendo carrera, y a la mujer que hoy está batallando en su trabajo.",
     tx: "La transcripción completa estará disponible con el lanzamiento del episodio." }
 ];
+/* Texto oficial del podcast (documento "textos podcast - pagina web - exposición") */
+MDP.podcastIntro = [
+  "El podcast es una extensión de los relatos compartidos por las mujeres participantes de este proyecto. A través de su propia voz, ellas cuentan momentos de sus vidas en los que han tenido que enfrentar situaciones y desafíos que han marcado tanto su trayectoria profesional como su vida personal.",
+  "Son cinco episodios que abordan diferentes temas y momentos significativos en la vida de cada una de ellas, recorriendo sus experiencias profesionales, personales y sus trayectorias como mujeres en la ingeniería, la geología y otras áreas STEM. Cada episodio abre un espacio para escuchar, más allá de su profesión, a la persona que existe detrás de ella: sus decisiones, aprendizajes, dificultades y las experiencias que han contribuido a construir quiénes son y el trabajo que realizan actualmente.",
+  "Descubrimos que, aunque sus historias son distintas, hay experiencias que las conectan. Los desafíos, las decisiones y las formas de enfrentarlos terminan entrelazándose para revelar un relato común: el de Mujeres de Profesión que han construido sus caminos profesionales atravesando obstáculos, transformaciones y momentos que también las han definido como personas."
+];
+
+/* ---------------------------------------------------------
+   EXPOSICIÓN FOTOGRÁFICA
+   --------------------------------------------------------- */
+MDP.exposicion = {
+  lugar: "Edificio de Posgrados de Ciencias Humanas",
+  institucion: "Universidad Nacional de Colombia",
+  fechas: "",               // p. ej. "Del 5 al 30 de octubre de 2026" (vacío = "Próximamente")
+  horario: "",              // p. ej. "Lunes a viernes · 8:00 a. m. – 6:00 p. m."
+  mapa: "",                 // URL de Google Maps (opcional)
+  textos: [
+    "El proyecto Mujeres de Profesión se extiende al espacio físico a través de una exposición fotográfica en el edificio de Posgrados de Ciencias Humanas de la Universidad Nacional. La exposición propone llevar las historias de las participantes a un contexto artístico y cotidiano, donde sus imágenes puedan ser contempladas más allá de las páginas del fotolibro y convertirse en un encuentro directo con quienes hacen parte del proyecto. Las fotografías dialogan con el espacio universitario para visibilizar las múltiples dimensiones de las mujeres participantes.",
+    "El retrato en blanco y negro adquiere un carácter particular. A diferencia de las fotografías que muestran sus espacios de trabajo, herramientas y contextos profesionales, esta imagen busca detener la mirada en ellas mismas: en su presencia, identidad y dimensión humana.",
+    "Al llevar estos retratos a la exposición, Mujeres de Profesión amplía su relato desde la investigación y la palabra hacia la imagen y el espacio, creando una experiencia que permite acercarse a las protagonistas desde una mirada más íntima. Así, la exposición se convierte en otra forma de contar sus historias y de recordar que detrás de cada profesión, cargo o trayectoria existe una mujer con una historia propia."
+  ]
+};
+
+/* ---------------------------------------------------------
+   AGENDA — exposiciones, charlas y talleres.
+   Agrega un objeto por evento; se ordenan por fecha y los
+   pasados se muestran aparte automáticamente.
+   fecha: "AAAA-MM-DD"  · tipo: Exposición | Charla | Taller
+   {
+     fecha: "2026-10-15", hora: "4:00 p. m.", tipo: "Charla",
+     titulo: "Nuevas formas de divulgación en ciencia",
+     lugar: "Auditorio …, Universidad Nacional",
+     desc: "…", url: ""   // enlace de inscripción (opcional)
+   }
+   --------------------------------------------------------- */
+MDP.agenda = [];
+
 MDP.podcastBonus = {
   titulo: "Cómo promover la ingeniería en tu entorno", tema: "Episodio oculto · se desbloquea al completar el álbum", spotify: "",
   desc: "Nuevas formas de divulgación en ciencia: cómo una investigación puede contarse de manera más cercana y cómo tú puedes abrir camino a más mujeres en ingeniería desde tu colegio, tu universidad o tu trabajo."
