@@ -330,7 +330,7 @@ main { display: block; }
 }
 
 .hero-pill {
-  position: absolute; z-index: 6; left: 8%; right: 8%; top: 46%;
+  position: absolute; z-index: 6; left: 24px; bottom: 24px; width: min(440px, calc(100% - 48px));
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
   padding: 12px 14px; background: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.85);
   backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
@@ -396,7 +396,7 @@ main { display: block; }
   .tile.cta { grid-column: 1 / -1; min-height: 120px; }
   .tile:nth-child(2) { border-right: 0; }
   .tile { border-bottom: 1px solid var(--line-2); min-height: 130px; }
-  .hero-pill { left: 12px; right: 12px; top: auto; bottom: 12px; padding: 8px 10px; gap: 8px; }
+  .hero-pill { left: 12px; bottom: 12px; width: calc(100% - 24px); padding: 8px 10px; gap: 8px; }
   .hero-pill .dot { width: 30px; height: 30px; font-size: 11px; }
   .hero-pill .lbl { font-size: 9px; letter-spacing: .14em; white-space: nowrap; }
   .hero-pill .val { font-size: 12.5px; }
