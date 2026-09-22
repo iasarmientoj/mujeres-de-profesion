@@ -215,7 +215,10 @@
       const pos = MDP.women.map((w, i) => { const a = -Math.PI / 2 + (i * 2 * Math.PI) / 8; return { w, x: cx + rx * Math.cos(a), y: cy + ry * Math.sin(a) }; });
       const P0 = (s) => pos.find((p) => p.w.slug === s);
       const pairs = [];
-      MDP.women.forEach((w) => { const k = [w.slug, w.conexion.con].sort().join("|"); if (!pairs.find((p) => p.k === k)) pairs.push({ k, a: w.slug, b: w.conexion.con, t: w.conexion.texto }); });
+      MDP.women.forEach((w) => w.conexiones.forEach((c) => {
+        const k = [w.slug, c.con].sort().join("|");
+        if (!pairs.find((p) => p.k === k)) pairs.push({ k, a: w.slug, b: c.con, t: c.texto });
+      }));
       const edge = (p) => { const A1 = P0(p.a), B = P0(p.b); const mx = (A1.x + B.x) / 2, my = (A1.y + B.y) / 2; const qx = mx + (cx - mx) * 0.55, qy = my + (cy - my) * 0.55; return `<path class="edge" data-k="${p.k}" d="M${A1.x} ${A1.y} Q${qx} ${qy} ${B.x} ${B.y}"/>`; };
       // Hilo común tenue: todas se conectan con el centro ("abrir camino")
       const center = `<g class="center"><circle cx="${cx}" cy="${cy}" r="3" fill="var(--cream)"/><text x="${cx}" y="${cy + 26}" text-anchor="middle" style="font-family:var(--ff);font-size:11px;letter-spacing:.3em;fill:var(--cream-2)">ABRIR CAMINO</text></g>`;
@@ -233,11 +236,18 @@
       const hot = (slug) => {
         $$(".node", net).forEach((n) => n.classList.remove("hot")); $$(".edge", net).forEach((e) => e.classList.remove("hot"));
         if (!slug) { note.innerHTML = "Pasa el cursor (o toca) sobre una mujer para descubrir con quién se conecta su historia."; return; }
-        const w = W(slug), p = pairs.find((x) => x.a === slug || x.b === slug);
+        const w = W(slug);
+        const mine = pairs.filter((x) => x.a === slug || x.b === slug);
         $(`.node[data-s="${slug}"]`, net).classList.add("hot");
-        $(`.node[data-s="${w.conexion.con}"]`, net).classList.add("hot");
-        $(`.edge[data-k="${p.k}"]`, net).classList.add("hot");
-        note.innerHTML = `<strong style="font-style:normal">${esc(w.corto)} ↔ ${esc(W(w.conexion.con).corto)}.</strong> ${esc(w.conexion.texto)}`;
+        mine.forEach((p) => {
+          $(`.edge[data-k="${p.k}"]`, net).classList.add("hot");
+          const otro = p.a === slug ? p.b : p.a;
+          $(`.node[data-s="${otro}"]`, net).classList.add("hot");
+        });
+        const otras = mine.map((p) => W(p.a === slug ? p.b : p.a).corto);
+        // prefiere el texto que ella misma escribió sobre su conexión
+        const texto = (w.conexiones[0] && w.conexiones[0].texto) || mine[0].t;
+        note.innerHTML = `<strong style="font-style:normal">${esc(w.corto)} ↔ ${esc(otras.join(" · "))}.</strong> ${esc(texto)}`;
       };
       $$(".node", net).forEach((n) => {
         n.addEventListener("mouseenter", () => hot(n.dataset.s));
@@ -331,12 +341,12 @@
         <p class="frase rv">${esc(a.IV.frase)}</p>
         ${collects("IV")}
         <div class="thread-grid">
-          <a class="rv" href="${R(`mujeres/${w.conexion.con}/`)}">
+          ${w.conexiones.map((c) => `<a class="rv" href="${R(`mujeres/${c.con}/`)}">
             <span class="k">Conecta con otra historia</span>
-            <div class="conn-img"><img src="${IMG(w.conexion.con, W(w.conexion.con).card, true)}" alt=""><h4>${esc(W(w.conexion.con).corto)}</h4></div>
-            <p>${esc(w.conexion.texto)}</p>
+            <div class="conn-img"><img src="${IMG(c.con, W(c.con).card, true)}" alt=""><h4>${esc(W(c.con).corto)}</h4></div>
+            <p>${esc(c.texto)}</p>
             <span class="go">Ir a su historia ${I.right}</span>
-          </a>
+          </a>`).join("")}
           <a class="rv rv-d1" href="${R("podcast/")}">
             <span class="k">Escúchala</span><h4>En su propia voz</h4>
             <p>En el podcast, ${esc(w.corto)} y las demás mujeres hablan de la vida profesional, la familia, la universidad y lo que significa ser mujer en la ingeniería.</p>
@@ -401,6 +411,18 @@
       const url = MDP.site.researchPdf;
       if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
       else { a.removeAttribute("href"); a.setAttribute("aria-disabled", "true"); a.title = "Disponible muy pronto"; a.style.opacity = ".55"; a.style.cursor = "not-allowed"; a.querySelector("[data-soon]") && (a.querySelector("[data-soon]").textContent = " · pronto"); }
+    });
+
+    // Infografías del equipo de investigación
+    $$("[data-infografia]").forEach((el) => {
+      const k = el.dataset.infografia, g = MDP.research.infografias[k];
+      if (!g) return;
+      el.innerHTML = `<figure class="info-fig rv">
+          <button class="info-img" aria-label="Ampliar: ${esc(g.titulo)}"><img src="${R(`assets/img/investigacion/infografia-${k}-s.jpg`)}" alt="${esc(g.alt)}" loading="lazy"><span class="zoom">Ampliar ⤢</span></button>
+          <figcaption><strong>${esc(g.titulo)}</strong> · ${esc(g.nota)}</figcaption>
+        </figure>
+        <ul class="info-data">${g.datos.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>`;
+      $(".info-img", el).onclick = () => A.LB.open([{ src: R(`assets/img/investigacion/infografia-${k}.jpg`), cap: esc(g.titulo), note: "Investigación · Mujeres de Profesión" }], 0);
     });
 
     // Gráfico dumbbell

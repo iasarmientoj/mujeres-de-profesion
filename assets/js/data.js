@@ -49,38 +49,40 @@ MDP.women = [
       "Hay caminos que se recorren con la cabeza y otros con el cuerpo. Lorena conoce los dos: en la ingeniería encuentra el desafío de resolver; en el triatlón, el de resistir.",
       "En ambos ha aprendido que avanzar también significa sostenerse cuando el camino se hace difícil."
     ],
-    cita: "Se trata de hacer posible que otras lleguen.",
-    resumenQR: "Ingeniera electrónica en el área de Defensa para Latinoamérica. En la ingeniería encuentra el desafío de <em>resolver</em>; en el triatlón, el de <em>resistir</em>. Entiende su presencia en el sector como una forma de abrir camino para quienes hoy se están formando.",
-    borrador: true,
+    cita: "Soy una princesa guerrera, soñadora, que no espera que nada le llegue, construye lo que quiere lograr.",
+    resumenQR: "Ingeniera electrónica con experiencia en tecnología y liderazgo. La tecnología la sorprendió por su impacto en la sociedad y su capacidad de transformar. Su motivación: <em>abrir camino a las que vienen detrás</em>.",
     actos: {
       I: {
-        titulo: "Resolver",
+        titulo: "La tecnología como posibilidad",
         bloques: [
-          { t: "txt", label: "El territorio", html: "Lorena es <strong>ingeniera electrónica</strong> y trabaja en el área de <strong>Defensa para Latinoamérica</strong>. Con formación de maestría y más de una década de experiencia, se mueve en una disciplina que diseña los circuitos, redes y sistemas que hacen posible la comunicación contemporánea." },
-          { t: "ph", img: "contexto-2", s: "b", cap: "En la ingeniería encuentra el desafío de resolver." },
-          { t: "ph", img: "contexto-1", s: "a", cap: "Más de una década de experiencia en un sector que todavía necesita más mujeres." },
-          { t: "txt", r: true, label: "Una cifra", html: "En electrónica y telecomunicaciones, la participación femenina pasó del <strong>17,27 %</strong> en 2001 al <strong>14,22 %</strong> en 2022. <a class='xlink' data-x='research:electronica'>El crecimiento tecnológico no garantiza inclusión</a>." },
-          { t: "ph", img: "contexto-4", s: "c" }, { t: "ph", img: "contexto-3", s: "d" }
+          { t: "txt", label: "El territorio", html: "La tecnología la sorprendió por su <strong>impacto en la sociedad y su capacidad de transformar</strong>. Lorena es ingeniera electrónica, con experiencia en tecnología y liderazgo, y trabaja en el área de <a class='xlink' data-x='research:electronica'>Defensa para Latinoamérica</a>." },
+          { t: "ph", img: "contexto-2", s: "b" },
+          { t: "ph", img: "contexto-1", s: "a" },
+          { t: "txt", r: true, label: "Aprendizaje", html: "<strong>Aprender a no reaccionar.</strong> Tuvo que desarrollar autocontrol y aprender a negociar resultados de corto plazo pensando en cambios de largo plazo." },
+          { t: "ph", img: "contexto-4", s: "c" }, { t: "ph", img: "contexto-3", s: "d", cap: "Más de una década en un sector que todavía necesita más mujeres." }
         ]
       },
       II: {
-        titulo: "Resistir",
+        titulo: "El cuerpo también sabe quién eres",
         bloques: [
-          { t: "txt", label: "Más allá del trabajo", html: "En el <strong>triatlón</strong> encuentra otro tipo de desafío: el de resistir. Nadar, pedalear, correr, y sostenerse cuando el cuerpo pide parar." },
-          { t: "ph", img: "hobby-1", s: "a", cap: "Avanzar también significa sostenerse cuando el camino se hace difícil." },
+          { t: "txt", label: "Más allá del trabajo", html: "En el <strong>triatlón</strong> reconoce su fuerza de voluntad y su orientación al logro. Y algo importante: ahí ha aprendido a cuidarse a sí misma." },
+          { t: "ph", img: "hobby-1", s: "a" },
           { t: "ph", img: "hobby-3", s: "b" },
           { t: "pull", html: "Hay caminos que se recorren con la cabeza y otros con el cuerpo." },
           { t: "ph", img: "hobby-2", s: "c" }, { t: "ph", img: "hobby-4", s: "d" }
         ]
       },
       III: {
-        titulo: "Llegar no siempre es suficiente",
-        descubrimiento: "Quizá por eso entiende que llegar no siempre es suficiente. También hay que abrir camino para quienes vienen detrás.",
+        titulo: "La amiga divertida",
+        descubrimiento: "La amiga divertida, exploradora, que busca nuevas experiencias todo el tiempo.",
+        nota: "“Soy una princesa guerrera, soñadora, que no espera que nada le llegue, construye lo que quiere lograr”.",
         foto: "hobby-5"
       },
-      IV: { frase: "Se trata de hacer posible que otras lleguen." }
+      IV: { frase: "Somos sororas, somos un gallinero productivo y sobre todo una tribu que se apoya con amor." }
     },
-    conexion: { con: "diana", texto: "Una quiere abrir las puertas para quienes vienen detrás. La otra encuentra una ventana cuando se cierran." }
+    conexiones: [
+      { con: "andrea", texto: "Orgullo de lo que somos y de lo que hemos logrado, y la motivación de abrir camino a las que vienen detrás. Lorena cree en el trabajo con otras mujeres; Andrea piensa que ya es hora de cambiar la idea de que no podemos trabajar juntas." }
+    ]
   },
   {
     slug: "diana", no: "02",
@@ -118,7 +120,7 @@ MDP.women = [
       III: { titulo: "Las dos caras", descubrimiento: "“Las dos caras.”", foto: "hobby-5" },
       IV: { frase: "Siempre se puede." }
     },
-    conexion: { con: "lorena", texto: "Una encuentra una ventana cuando se cierran las puertas. La otra quiere abrirlas para quienes vienen detrás." }
+    conexiones: [{ con: "lorena", texto: "Una encuentra una ventana cuando se cierran las puertas. La otra quiere abrirlas para quienes vienen detrás." }]
   },
   {
     slug: "maria-cristina", no: "03",
@@ -157,7 +159,7 @@ MDP.women = [
       III: { titulo: "Autenticidad", descubrimiento: "Disfruta lo sencillo y entiende que el liderazgo no es perfección, sino autenticidad.", foto: "hobby-5" },
       IV: { frase: "La ingeniería no es solo para unas pocas, ni requiere ser perfecta para avanzar… vean que detrás de cada ingeniera hay una mujer real, que se equivoca, que se reinventa y que logra impactar con su talento." }
     },
-    conexion: { con: "milena", texto: "Dos mujeres que hablan de liderazgo desde lugares distintos." }
+    conexiones: [{ con: "milena", texto: "Dos mujeres que hablan de liderazgo desde lugares distintos." }]
   },
   {
     slug: "andrea", no: "04",
@@ -170,34 +172,40 @@ MDP.women = [
       "Andrea es luz. En la oscuridad de las minas, en la oscuridad de las almas.",
       "De las entrañas de la tierra asciende para acompañar, compartir y servir en su iglesia. Dos mundos distintos unidos por una misma sustancia."
     ],
-    cita: "Abrir camino no siempre significa avanzar sola. A veces significa ayudar a otros a encontrar el suyo.",
-    resumenQR: "Ingeniera de minas en las minas de carbón de Tópaga. Acompañamos a Andrea a las minas y todavía sorprende encontrar una mujer. <em>Andrea trabaja para que algún día deje de sorprender.</em>",
-    borrador: true,
+    cita: "Mi historia también cuenta y merece ser escuchada y valorada.",
+    resumenQR: "Ingeniera de minas en las minas de carbón de Tópaga. Su primera sorpresa fue descubrir el subsuelo y todo lo que sucede allí. Tuvo que aprender a confiar en sus conocimientos, defender sus ideas y <em>hacerse escuchar</em>.",
     actos: {
       I: {
-        titulo: "En la oscuridad de las minas",
+        titulo: "Bajo tierra",
         bloques: [
-          { t: "txt", label: "El territorio", html: "Andrea es <strong>ingeniera de minas</strong> y trabaja en las <strong>minas de carbón de Tópaga</strong>. Su trayectoria hace visible una presencia femenina que, más que excepcional, debe convertirse en referente para quienes vienen detrás." },
-          { t: "ph", img: "contexto-4", s: "b", cap: "Acompañamos a Andrea a las minas y todavía sorprende encontrar una mujer." },
-          { t: "ph", img: "contexto-3", s: "a" },
-          { t: "txt", r: true, label: "Una cifra", html: "Entre 2001 y 2025, las mujeres graduadas en <a class='xlink' data-x='research:minas'>ingeniería de minas</a> pasaron de un promedio de <strong>23,7 %</strong> a <strong>32,6 %</strong>. En el empleo minero, sin embargo, su presencia sigue siendo reducida: <strong>14,9 %</strong>." },
+          { t: "txt", label: "El territorio", html: "La primera sorpresa de Andrea fue descubrir el <strong>subsuelo</strong>, la explotación minera y todo lo que sucede allí. Trabaja en las <a class='xlink' data-x='research:minas'>minas de carbón</a> de Tópaga." },
+          { t: "ph", img: "contexto-4", s: "b" },
+          { t: "ph", img: "contexto-3", s: "a", cap: "Una mujer puede llevar la batuta de una explotación minera." },
+          { t: "txt", r: true, label: "Aprendizaje", html: "Aprender a <strong>confiar en sus conocimientos</strong>, defender sus ideas y hacerse escuchar." },
           { t: "ph", img: "contexto-2", s: "c" }, { t: "ph", img: "contexto-1", s: "d" }
         ]
       },
       II: {
-        titulo: "Dos mundos, una misma sustancia",
+        titulo: "Detrás de la mujer fuerte",
         bloques: [
-          { t: "txt", label: "Más allá del trabajo", html: "De las entrañas de la tierra asciende para <strong>acompañar, compartir y servir</strong> en su iglesia." },
+          { t: "txt", label: "Más allá del trabajo", html: "Andrea ha aprendido a <strong>descansar, tomar una pausa y recargar energías</strong>. De las entrañas de la tierra asciende para acompañar, compartir y servir en su iglesia." },
           { t: "ph", img: "hobby-1", s: "a" },
           { t: "ph", img: "hobby-4", s: "b" },
-          { t: "pull", html: "Andrea es luz. En la oscuridad de las minas, en la oscuridad de las almas." },
+          { t: "pull", html: "Detrás de la mujer fuerte existe sensibilidad y disposición para darlo todo por los demás." },
           { t: "ph", img: "hobby-3", s: "c" }, { t: "ph", img: "hobby-2", s: "d" }
         ]
       },
-      III: { titulo: "Que deje de sorprender", descubrimiento: "Andrea trabaja para que algún día encontrar una mujer en la mina deje de sorprender.", foto: "hobby-5" },
-      IV: { frase: "Abrir camino no siempre significa avanzar sola. A veces significa ayudar a otros a encontrar el suyo." }
+      III: {
+        titulo: "El descubrimiento",
+        descubrimiento: "“Somos muchas las mujeres que enfrentamos diferentes retos y que, gracias a nuestro esfuerzo, somos capaces de sobrellevar situaciones personales, familiares y profesionales, especialmente en un mundo que aún sigue siendo mayoritariamente masculino”.",
+        foto: "hobby-5"
+      },
+      IV: { frase: "Mi historia también cuenta y merece ser escuchada y valorada." }
     },
-    conexion: { con: "jessica", texto: "Con Andrea, la fortaleza no consiste en ocultar todas las partes vulnerables de una persona. Con Jessica descubrimos que las fragilidades también pueden ser herramientas." }
+    conexiones: [
+      { con: "jessica", texto: "Tres mujeres que, de maneras distintas, tuvieron que hacerse un lugar en espacios donde su presencia todavía llama la atención." },
+      { con: "diana", texto: "La misma búsqueda, otro oficio: Diana no pide permiso para pertenecer en un taller de mecánica, demuestra que pertenece." }
+    ]
   },
   {
     slug: "alejandra", no: "05",
@@ -208,36 +216,43 @@ MDP.women = [
     hero: { img: "home-1", pos: "47% 18%" }, card: "contexto-4", cardPos: "50% 30%",
     intro: [
       "En la tecnología imagina, conecta y transforma; en las caminatas encuentra el tiempo para observar. Dos maneras distintas de avanzar, una misma curiosidad por descubrir qué hay más adelante.",
-      "Desde la innovación, ella construye su trayectoria en un sector donde hacer visible la experiencia de las mujeres también es transformar el futuro."
+      "Desde la innovación construye su trayectoria en un sector donde hacer visible la experiencia de las mujeres también es transformar el futuro."
     ],
-    cita: "Alejandra eligió no solo adaptarse al futuro, sino ayudar a imaginarlo.",
-    resumenQR: "Ingeniera de sistemas, directora de innovación y cofundadora de InterfaseTecnológica. En la tecnología imagina, conecta y transforma; en las caminatas encuentra el tiempo para observar. <em>Eligió no solo adaptarse al futuro, sino ayudar a imaginarlo.</em>",
-    borrador: true,
+    cita: "Cada mujer que logra avanzar inspira a muchas más.",
+    resumenQR: "Ingeniera de sistemas, directora de innovación y cofundadora de InterfaseTecnológica. Su primer descubrimiento fue la baja participación de mujeres en tecnología. <em>“He aprendido a verme y reconocerme”.</em>",
     actos: {
       I: {
-        titulo: "Imaginar, conectar, transformar",
+        titulo: "No todo es innovación",
         bloques: [
-          { t: "txt", label: "El territorio", html: "Alejandra es <strong>ingeniera de sistemas</strong>, directora de innovación y cofundadora de <strong>InterfaseTecnológica</strong>. Su recorrido combina creación empresarial, liderazgo y una mirada crítica sobre la experiencia de ser mujer en el sector tecnológico." },
+          { t: "txt", label: "Su primer descubrimiento", html: "<strong>La baja participación de mujeres en tecnología.</strong> Alejandra es ingeniera de sistemas, directora de innovación y cofundadora de InterfaseTecnológica. A comienzos de siglo las mujeres alcanzaron el 42,84 % de las graduaciones en <a class='xlink' data-x='research:sistemas'>ingeniería de sistemas</a>; en 2025 llegaron al 17,37 %." },
           { t: "ph", img: "contexto-1", s: "a" },
           { t: "ph", img: "contexto-5", s: "b" },
-          { t: "txt", r: true, label: "Una cifra", html: "A comienzos de siglo, las mujeres alcanzaron el <strong>42,84 %</strong> de las graduaciones en <a class='xlink' data-x='research:sistemas'>ingeniería de sistemas</a>. En 2025 la cifra llegó al <strong>17,37 %</strong>." },
+          { t: "txt", r: true, label: "Aprendizaje", html: "Tuvo que aprender a gestionar terminaciones de contratos. <strong>No todo es innovación. También hay decisiones difíciles.</strong>" },
+          { t: "pull", html: "¿Por qué seguimos creyendo que las mujeres no podemos trabajar juntas?" },
           { t: "ph", img: "contexto-3", s: "c" }, { t: "ph", img: "contexto-2", s: "d" }
         ]
       },
       II: {
-        titulo: "Algunas respuestas aparecen cuando una deja de correr",
+        titulo: "La vida es mucho más que un trabajo",
         bloques: [
-          { t: "txt", label: "Más allá del trabajo", html: "Alejandra hace <strong>caminatas por la naturaleza</strong>. Tal vez porque algunas respuestas aparecen cuando uno deja de correr." },
+          { t: "txt", label: "El descubrimiento", html: "“La vida es mucho más que un trabajo, más que una profesión.” Alejandra hace <strong>caminatas por la naturaleza</strong>: tal vez porque algunas respuestas aparecen cuando una deja de correr." },
           { t: "ph", img: "hobby-1", s: "a" },
-          { t: "ph", img: "hobby-2", s: "b" },
-          { t: "pull", html: "Dos maneras distintas de avanzar, una misma curiosidad por descubrir qué hay más adelante." },
+          { t: "ph", img: "hobby-2", s: "b", cap: "“Me tomo muy en serio lo que hago, me importan profundamente las personas con las que trabajo y muchas veces soy mucho más exigente conmigo misma de lo que los demás perciben”." },
+          { t: "pull", html: "He aprendido a verme y reconocerme." },
           { t: "ph", img: "hobby-3", s: "c" }, { t: "ph", img: "hobby-4", s: "d" }
         ]
       },
-      III: { titulo: "Reconocerse", descubrimiento: "Alejandra no es solamente el cargo que ocupa ni los logros que acumula: como mujer también es aquello que descubre de sí misma cuando se permite mirar más allá de su profesión.", foto: "hobby-5" },
-      IV: { frase: "Alejandra eligió no solo adaptarse al futuro, sino ayudar a imaginarlo." }
+      III: {
+        titulo: "Lo que no se ve",
+        descubrimiento: "Detrás de la seguridad y la determinación hay una persona reflexiva y sensible.",
+        nota: "Alejandra no es solamente el cargo que ocupa ni los logros que acumula: como mujer también es aquello que descubre de sí misma cuando se permite mirar más allá de su profesión.",
+        foto: "hobby-5"
+      },
+      IV: { frase: "Cada mujer que logra avanzar inspira a muchas más." }
     },
-    conexion: { con: "claudia-maria", texto: "Confiar en la fuerza que llevamos dentro: Alejandra habla de aprender a reconocer esa fuerza; Claudia María, de la convicción de que lo hecho con amor y certeza siempre sale bien." }
+    conexiones: [
+      { con: "lorena", texto: "Alejandra se conecta directamente con Lorena: trabajar juntas. Las dos comparten la misma pregunta y la misma respuesta sobre el trabajo entre mujeres." }
+    ]
   },
   {
     slug: "milena", no: "06",
@@ -277,7 +292,7 @@ MDP.women = [
       III: { titulo: "Permanecer", descubrimiento: "Milena no habla solamente de llegar. Habla de permanecer y resistir sin perder su calidad humana.", foto: "hobby-5" },
       IV: { frase: "La excelencia también abre caminos." }
     },
-    conexion: { con: "maria-cristina", texto: "Dos mujeres que hablan de liderazgo desde lugares distintos." }
+    conexiones: [{ con: "maria-cristina", texto: "Dos mujeres que hablan de liderazgo desde lugares distintos." }]
   },
   {
     slug: "claudia-maria", no: "07",
@@ -316,7 +331,7 @@ MDP.women = [
       III: { titulo: "Lo que no se ve", descubrimiento: "“Soy una mujer curiosa, que siente con el alma…”", nota: "Este retrato adquiere otra lectura. No es la ingeniera civil. Es la mujer que todavía está descubriendo todo lo que hay en ella.", foto: "hobby-5" },
       IV: { frase: "Quiero que se queden con la convicción de que tenemos la fuerza y la capacidad para cumplir nuestra misión de vida, que lo hecho con amor y certeza siempre sale bien." }
     },
-    conexion: { con: "alejandra", texto: "Confiar en la fuerza que llevamos dentro conecta maravillosamente con Alejandra, quien habla de aprender a reconocer esa fuerza." }
+    conexiones: [{ con: "alejandra", texto: "Confiar en la fuerza que llevamos dentro conecta maravillosamente con Alejandra, quien habla de aprender a reconocer esa fuerza." }]
   },
   {
     slug: "jessica", no: "08",
@@ -354,7 +369,7 @@ MDP.women = [
       III: { titulo: "Lo que no se ve", descubrimiento: "“El alma tierna y amigable detrás de alguien fuerte.”", foto: "hobby-4" },
       IV: { frase: "Expresar las ‘fragilidades’ como herramientas para deconstruirse para ayudar a los demás." }
     },
-    conexion: { con: "andrea", texto: "Con Jessica descubrimos que las fragilidades también pueden ser herramientas. Con Andrea, la fortaleza no consiste en ocultar todas las partes vulnerables de una persona." }
+    conexiones: [{ con: "andrea", texto: "Con Jessica descubrimos que las fragilidades también pueden ser herramientas. Con Andrea, la fortaleza no consiste en ocultar todas las partes vulnerables de una persona." }]
   }
 ];
 
@@ -426,6 +441,21 @@ MDP.research = {
       texto: "Permite leer la Tierra: sus rocas, aguas, riesgos, recursos y transformaciones. Entre 2001 y 2025, la participación femenina en geología osciló entre el 30 % y el 46 %: una proporción mayor que en varias ingenierías, aunque todavía distante de una paridad sostenida.",
       ella: "Jessica es gerente de una empresa dedicada al análisis de riesgos de desastre, geotecnia, geociencias y topografía. Su trabajo conecta conocimiento científico, territorio y prevención." }
   ],
+  /* Infografías del equipo de investigación (assets/img/investigacion/) */
+  infografias: {
+    educacion: {
+      titulo: "Participación en educación",
+      nota: "Cifras globales y de Colombia recopiladas por el equipo de investigación.",
+      alt: "Infografía de participación en educación. La matrícula terciaria femenina pasó del 19 % en 2000 al 43,3 % en 2023. Tendencias de género en las matrículas de 2022: ratio de 100 hombres por cada 113 mujeres; en Colombia el 53,4 % son mujeres. Brecha STEAM global: 35 % de graduadas, sin variación en los últimos 10 años. Mujeres matriculadas en ingenierías: Estados Unidos 16 %, Chile 33 %, Sudáfrica 7 %, Australia 17 %.",
+      datos: ["19 % → 43,3 % de matrícula terciaria femenina (2000–2023)", "100 hombres por cada 113 mujeres matriculadas (2022)", "35 % de graduadas STEAM, sin variación en 10 años", "Ingenierías: Chile 33 % · Australia 17 % · EE. UU. 16 % · Sudáfrica 7 %"]
+    },
+    laboral: {
+      titulo: "Participación laboral",
+      nota: "El título no cierra la brecha: la participación cae al pasar al empleo y a los cargos directivos.",
+      alt: "Infografía de participación laboral. Participación femenina en la fuerza laboral global: 65,7 %. Participación laboral STEAM: 28,2 %. Mujeres que alcanzan altos cargos directivos: 12,4 %. Empleos en sectores tecnológicos y científicos: 25 %. Solicitudes de patentes a nivel mundial: 17 %. En 2022: 26 % de la fuerza laboral en datos e inteligencia artificial, 15 % en ingeniería y 12 % en computación en la nube.",
+      datos: ["65,7 % en la fuerza laboral global", "28,2 % en empleo STEAM", "12,4 % llega a altos cargos directivos", "25 % de los empleos tecnológicos y científicos", "17 % de las solicitudes de patentes"]
+    }
+  },
   mecanismos: [
     { id: "caneria", nombre: "Cañería rota", en: "Leaky pipeline", texto: "Describe cómo la participación de las mujeres disminuye a medida que avanzan la formación y la carrera profesional.", ep: 3 },
     { id: "techo", nombre: "Techo de cristal", en: "Glass ceiling", texto: "Nombra los límites invisibles que frenan el ascenso a cargos directivos.", ep: 1 },
