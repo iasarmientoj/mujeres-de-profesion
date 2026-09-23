@@ -2,11 +2,9 @@
    MUJERES DE PROFESIÓN — CONTENIDO DEL SITIO
    ---------------------------------------------------------
    Todo el texto editable vive aquí. No hace falta tocar HTML.
-   · Textos marcados con  borrador: true  fueron redactados a
-     partir del libro y la investigación y deben ser revisados
-     por el equipo (no contienen citas inventadas).
-   · Las citas entre comillas provienen del fotolibro o del
-     documento "TEXTOS PAGINA WEB".
+   · Las ocho historias usan los textos del equipo (documentos
+     "TEXTOS PAGINA WEB"); las citas entre comillas provienen de
+     ellos o del fotolibro.
    ========================================================= */
 
 window.MDP = {};
@@ -265,34 +263,40 @@ MDP.women = [
       "Entre máquinas, energía y decisiones, Milena aprendió a moverse con precisión.",
       "En el campo de golf, mientras practica, encuentra otro tipo de desafío: calcular la distancia, elegir el golpe y confiar en el siguiente movimiento."
     ],
-    cita: "La excelencia también abre caminos.",
-    resumenQR: "Ingeniera mecánica y gerente general de Blackstone Energy Colombia S.A.S. En un campo donde todavía son pocas las mujeres, Milena no habla solamente de llegar: <em>habla de permanecer y resistir sin perder su calidad humana.</em>",
-    borrador: true,
+    cita: "Valorarnos y confiar en nosotras mismas, en nuestro talento.",
+    resumenQR: "Ingeniera mecánica y gerente general de Blackstone Energy Colombia S.A.S. <em>“No lo hacemos por demostrar algo o por una lucha de género; lo hacemos porque amamos la carrera que escogimos”.</em>",
     actos: {
       I: {
-        titulo: "Entre máquinas, energía y decisiones",
+        titulo: "Permanecer con propósito",
         bloques: [
-          { t: "txt", label: "El territorio", html: "Milena es <strong>ingeniera mecánica</strong> y <strong>gerente general de Blackstone Energy Colombia S.A.S.</strong> Su trayectoria une experiencia técnica, liderazgo y una convicción clara: la excelencia profesional también puede abrir camino para otras mujeres." },
+          { t: "txt", label: "El territorio", html: "“No lo hacemos por demostrar algo o por una lucha de género; lo hacemos porque amamos la carrera que escogimos.” Milena es <strong>gerente general de Blackstone Energy Colombia S.A.S.</strong>" },
           { t: "ph", img: "contexto-3", s: "b" },
-          { t: "ph", img: "contexto-1", s: "a" },
-          { t: "txt", r: true, label: "Una cifra", html: "En Colombia, entre 2001 y 2025 las mujeres no alcanzaron el <strong>12 %</strong> de las graduaciones en <a class='xlink' data-x='research:mecanica'>ingeniería mecánica</a>: una de las especialidades con menor presencia femenina." },
+          { t: "ph", img: "contexto-1", s: "a", cap: "Permanecer en un sector exigente sin perder aquello que te hizo elegirlo." },
+          { t: "txt", r: true, label: "Su lugar", html: "“Soy parte de un sector históricamente desafiante”. En Colombia, entre 2001 y 2025, las mujeres no alcanzaron el 12 % de las graduaciones en <a class='xlink' data-x='research:mecanica'>ingeniería mecánica</a>." },
           { t: "ph", img: "contexto-4", s: "c" }, { t: "ph", img: "contexto-2", s: "d" }
         ]
       },
       II: {
-        titulo: "A su propio ritmo",
+        titulo: "¿Qué sostiene a una mujer que parece tenerlo todo bajo control?",
         bloques: [
-          { t: "txt", label: "Más allá del trabajo", html: "En el golf disfruta ir a su propio ritmo, marcar su propio recorrido, sin la presión de ver a su <em>“competencia”</em>." },
+          { t: "txt", label: "Más allá del trabajo", html: "“El golf me ayuda a tener <strong>serenidad, control de las emociones</strong> y ser constante en lo que hago”." },
           { t: "ph", img: "hobby-4", s: "a" },
           { t: "ph", img: "hobby-2", s: "b" },
-          { t: "pull", html: "Calcular la distancia, elegir el golpe y confiar en el siguiente movimiento." },
+          { t: "pull", html: "La disciplina, la tenacidad y el liderazgo son fundamentales para Milena." },
           { t: "ph", img: "hobby-1", s: "c" }, { t: "ph", img: "hobby-3", s: "d" }
         ]
       },
-      III: { titulo: "Permanecer", descubrimiento: "Milena no habla solamente de llegar. Habla de permanecer y resistir sin perder su calidad humana.", foto: "hobby-5" },
-      IV: { frase: "La excelencia también abre caminos." }
+      III: {
+        titulo: "El descubrimiento",
+        descubrimiento: "“Mi cercanía con Dios.”",
+        foto: "hobby-5"
+      },
+      IV: { frase: "Valorarnos y confiar en nosotras mismas, en nuestro talento." }
     },
-    conexiones: [{ con: "maria-cristina", texto: "Dos mujeres que hablan de liderazgo desde lugares distintos." }]
+    conexiones: [
+      { con: "maria-cristina", texto: "No desde la lucha, sino desde la confianza en el propio talento: dos mujeres que hablan de liderazgo desde lugares distintos." },
+      { con: "claudia-maria", texto: "Confiar en el propio talento y en la fuerza que llevamos dentro: la misma convicción, dos oficios distintos." }
+    ]
   },
   {
     slug: "claudia-maria", no: "07",

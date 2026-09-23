@@ -375,7 +375,6 @@ main { display: block; }
 .hero-progress button::after { background: var(--ink); transform: scaleX(0); transform-origin: left; }
 .hero-progress button.done::after { transform: scaleX(1); }
 .hero-progress button.active::after { animation: prog var(--dur, 6.5s) linear forwards; }
-.hero.paused .hero-progress button.active::after { animation-play-state: paused; }
 @keyframes prog { to { transform: scaleX(1); } }
 
 .hero-tiles { display: grid; grid-template-columns: 1fr 1fr 1.4fr; margin: 0 var(--gutter); border: 1px solid var(--line-2); border-top: 1px solid var(--line-2); position: relative; z-index: 4; background: var(--paper-2); }

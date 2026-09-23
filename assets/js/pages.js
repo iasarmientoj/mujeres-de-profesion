@@ -47,7 +47,7 @@
     const who = $(".hero-kicker .who", hero);
     const pill = $(".hero-pill", hero);
     const prog = $(".hero-progress", hero);
-    const DUR = 6500;
+    const DUR = 5200;
 
     // Una frase gancho por mujer, en orden aleatorio (distinto en cada visita)
     let seen = {};
@@ -129,10 +129,7 @@
     hookEl.addEventListener("click", open);
     stage.addEventListener("click", open);
     stage.style.cursor = "pointer";
-    let remaining = DUR, started = 0;
-    hero.addEventListener("mouseenter", () => { hero.classList.add("paused"); clearTimeout(timer); });
-    hero.addEventListener("mouseleave", () => { hero.classList.remove("paused"); clearTimeout(timer); timer = setTimeout(() => go((cur + 1) % slides.length), 2500); });
-    void remaining; void started;
+    // el carrusel no se detiene al pasar el cursor: parecía trabado
     go(0);
 
     // Tarjeta de álbum en el hero
