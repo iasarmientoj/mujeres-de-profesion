@@ -101,6 +101,7 @@
 
       const apply = () => {
         who.textContent = `${s.w.no} — ${s.w.nombre}`;
+        who.style.opacity = "1";
         pill.style.setProperty("--c", s.w.color);
         pill.innerHTML = `
           <div class="side"><span class="dot" style="background:${s.w.color}">${initials(s.w)}</span><span><span class="lbl">Profesión</span><br><span class="val">${esc(s.w.profesion)}</span></span></div>
@@ -111,7 +112,13 @@
         hookEl.dataset.href = R(`mujeres/${s.w.slug}/`);
       };
       if (prev === -1) apply();
-      else { hookEl.classList.remove("show"); hookEl.classList.add("hide"); pill.classList.add("swap"); setTimeout(apply, 520); }
+      else {
+        // el nombre se desvanece junto con la frase: nunca se ve una foto
+        // acompañada del nombre de la mujer anterior
+        hookEl.classList.remove("show"); hookEl.classList.add("hide");
+        pill.classList.add("swap"); who.style.opacity = "0";
+        setTimeout(apply, 520);
+      }
 
       clearTimeout(timer);
       timer = setTimeout(() => go((cur + 1) % slides.length), DUR);
