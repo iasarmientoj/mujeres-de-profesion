@@ -265,6 +265,7 @@
     },
     open(html, color, onClose) {
       if (!this.el) this.build();
+      $(".box", this.el).classList.remove("wide");
       $(".box", this.el).style.setProperty("--c", color || "var(--ink)");
       this.el.style.setProperty("--c", color || "var(--ink)");
       $(".m-body", this.el).innerHTML = html;
@@ -546,6 +547,8 @@
     },
 
     gracias(body, P) {
+      Prefs.write({ reservado: Date.now() });
+      const bar = $(".pv-bar"); if (bar) { bar.remove(); document.body.classList.remove("has-bar"); }
       body.innerHTML = `<div class="success">
         <span class="eyebrow no-rule">Preventa</span>
         <h3 style="margin-top:14px">¡Quedaste en la lista!</h3>
@@ -578,6 +581,70 @@
     if (b) { e.preventDefault(); Preventa.open(b.dataset.order || document.body.dataset.page || ""); }
   });
 
+  /* ---------- Memoria de la preventa (barra y bienvenida) ---------- */
+  const PrefsKey = "mdp-preventa-v1";
+  const Prefs = {
+    read() { try { return JSON.parse(localStorage.getItem(PrefsKey) || "{}"); } catch (e) { return {}; } },
+    write(o) { try { localStorage.setItem(PrefsKey, JSON.stringify(Object.assign(this.read(), o))); } catch (e) {} },
+    vencido(clave, dias) {
+      const t = this.read()[clave];
+      if (!t) return true;
+      if (!dias) return true;
+      return Date.now() - t > dias * 864e5;
+    }
+  };
+
+  /* ---------- Barra superior ---------- */
+  function renderBarra() {
+    const P = MDP.preventa || {}, B = P.barra || {};
+    if (!P.activa || !B.activa) return;
+    if (Prefs.read().reservado) return;
+    if (!Prefs.vencido("barraCerrada", B.repetirDias)) return;
+    const bar = document.createElement("div");
+    bar.className = "pv-bar";
+    bar.innerHTML = `
+      <button class="pv-bar-main" data-order="barra">
+        <i></i><span>${esc(B.texto)}</span> <b>${esc(B.enlace)}</b>${I.arr}
+      </button>
+      <button class="pv-bar-x" aria-label="Cerrar aviso">${I.close}</button>`;
+    document.body.prepend(bar);
+    document.body.classList.add("has-bar");
+    $(".pv-bar-x", bar).onclick = () => {
+      Prefs.write({ barraCerrada: Date.now() });
+      bar.style.height = "0"; bar.style.opacity = "0";
+      setTimeout(() => { bar.remove(); document.body.classList.remove("has-bar"); }, 400);
+    };
+  }
+
+  /* ---------- Ventana de bienvenida ---------- */
+  function bienvenida() {
+    const P = MDP.preventa || {}, B = P.bienvenida || {};
+    if (!P.activa || !B.activa) return;
+    if (Prefs.read().reservado) return;
+    if (!Prefs.vencido("bienvenidaVista", B.repetirDias)) return;
+    setTimeout(() => {
+      if (Modal.el && Modal.el.classList.contains("open")) return;   // no interrumpe otra cosa
+      Prefs.write({ bienvenidaVista: Date.now() });
+      const body = Modal.open(`
+        <div class="pv-welcome">
+          <div class="pv-welcome-img"><img src="${R(B.imagen)}" alt="Portada del fotolibro Mujeres de Profesión"><span class="pv-welcome-tag">25 × 25 cm · 8 historias</span></div>
+          <div class="pv-welcome-copy">
+            <span class="pv-badge"><i></i>Preventa abierta</span>
+            <h3>${esc(B.titulo)}</h3>
+            <p class="m-sub">${esc(B.texto)}</p>
+            <div class="actions">
+              <button class="btn solid" data-order="bienvenida">${esc(B.boton)} ${I.arr}</button>
+              <button class="btn" data-close>${esc(B.secundario)}</button>
+            </div>
+          </div>
+        </div>`, "var(--gold-ink)");
+      $(".box", Modal.el).classList.add("wide");
+      $("[data-close]", body).onclick = () => Modal.close();
+      const antes = Modal.onClose;
+      Modal.onClose = () => { $(".box", Modal.el).classList.remove("wide"); antes && antes(); };
+    }, B.esperaMs || 1500);
+  }
+
   /* =========================================================
      Exponer utilidades a pages.js
      ========================================================= */
@@ -585,11 +652,11 @@
 
   /* ---------- Arranque ---------- */
   const bare = document.body.dataset.bare === "1";
-  if (!bare) renderHeader();
+  if (!bare) { renderBarra(); renderHeader(); }
   document.addEventListener("DOMContentLoaded", () => {
     const page = document.body.dataset.page;
     if (window.MDPPages && MDPPages[page]) MDPPages[page]();
-    if (!bare) renderFooter();
+    if (!bare) { renderFooter(); bienvenida(); }
     initReveal();
   });
 })();

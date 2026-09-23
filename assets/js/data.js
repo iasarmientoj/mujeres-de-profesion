@@ -46,7 +46,27 @@ MDP.preventa = {
     "Te contactamos por WhatsApp o correo"
   ],
   gracias: "Gracias. Quedaste en la lista de la preventa: te escribiremos apenas el libro salga de imprenta.",
-  aviso: "Usamos tu nombre, correo y WhatsApp únicamente para contactarte sobre el libro."
+  aviso: "Usamos tu nombre, correo y WhatsApp únicamente para contactarte sobre el libro.",
+
+  /* Barra superior del sitio */
+  barra: {
+    activa: true,
+    texto: "Preventa abierta · el fotolibro está en imprenta.",
+    enlace: "Reserva tu ejemplar",
+    repetirDias: 3        // días que permanece cerrada tras pulsar la X
+  },
+
+  /* Ventana de bienvenida (se abre sola al entrar) */
+  bienvenida: {
+    activa: true,
+    repetirDias: 7,       // 0 = en cada visita
+    esperaMs: 1600,       // tiempo antes de aparecer
+    imagen: "assets/img/libro/p01.jpg",
+    titulo: "El fotolibro está en imprenta",
+    texto: "Mujeres de Profesión reúne ocho historias de mujeres en ingeniería y geociencias en un libro de 25 × 25 cm que existe solo en papel. Abrimos la preventa de la primera edición: reservar no tiene ningún costo.",
+    boton: "Reservar mi ejemplar",
+    secundario: "Seguir explorando el sitio"
+  }
 };
 
 MDP.credits = [
