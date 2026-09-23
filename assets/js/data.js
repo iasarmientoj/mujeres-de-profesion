@@ -167,7 +167,7 @@ MDP.women = [
     profesion: "Ingeniera de Minas", profesionEn: "Mining Engineer",
     disciplina: "minas", palabra: "Hacerse escuchar", color: "#3c4a42",
     intereses: ["servicio"], hobby: "Servicio en su iglesia", paginasLibro: "33 – 39",
-    hero: { img: "home-2", pos: "51% 40%" }, card: "contexto-4", cardPos: "50% 30%",
+    hero: { img: "home-3", pos: "38% 36%" }, card: "contexto-4", cardPos: "50% 30%",
     intro: [
       "Andrea es luz. En la oscuridad de las minas, en la oscuridad de las almas.",
       "De las entrañas de la tierra asciende para acompañar, compartir y servir en su iglesia. Dos mundos distintos unidos por una misma sustancia."
