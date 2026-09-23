@@ -22,6 +22,33 @@ MDP.site = {
   spotifyShow: ""           // URL del programa en Spotify
 };
 
+/* ---------------------------------------------------------
+   PREVENTA DEL LIBRO
+   El modal envía los datos al formulario de Google (misma hoja
+   de cálculo). Para desactivarla: activa: false.
+   --------------------------------------------------------- */
+MDP.preventa = {
+  activa: true,
+  formAction: "https://docs.google.com/forms/d/e/1FAIpQLSd5XMb1OBsrd4qSnhUXooIwerYGrbi8UbhdiQfzxgeH2TUj_Q/formResponse",
+  formUrl: "https://forms.gle/P3hs1uMrEXsWamYV9",   // respaldo, si el envío directo falla
+  campos: {
+    nombre: "entry.1164993366",
+    correo: "entry.1490336266",
+    whatsapp: "entry.2037583735"
+  },
+  titulo: "Reserva tu ejemplar",
+  intro: "El fotolibro está en imprenta y abrimos la preventa de la primera edición. Déjanos tus datos y te escribimos apenas salga, con el precio y las opciones de envío.",
+  entrega: "",          // p. ej. "Entrega estimada: noviembre de 2026"
+  precio: "",           // p. ej. "$ 000.000 COP (precio de preventa)"
+  beneficios: [
+    "Los primeros ejemplares de la primera edición",
+    "Reserva sin pago: primero confirmamos disponibilidad y envío",
+    "Te contactamos por WhatsApp o correo"
+  ],
+  gracias: "Gracias. Quedaste en la lista de la preventa: te escribiremos apenas el libro salga de imprenta.",
+  aviso: "Usamos tu nombre, correo y WhatsApp únicamente para contactarte sobre el libro."
+};
+
 MDP.credits = [
   { rol: "Directora de Proyecto", en: "Project Director", nombres: ["Olga Rosalba Rodríguez Jiménez"], org: "Universidad Nacional de Colombia" },
   { rol: "Coordinador Creativo y de Comunicaciones", en: "Creative and Communications Coordinator", nombres: ["Sergio David Niño López"] },

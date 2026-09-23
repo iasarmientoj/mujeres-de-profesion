@@ -1060,3 +1060,31 @@ details.table-view summary { cursor: pointer; font-size: 12px; letter-spacing: .
 .on-dark .info-data li { border-color: rgba(232,222,196,.2); color: var(--cream); }
 .on-dark .info-data li::before { color: var(--cream-2); }
 @media (max-width: 860px) { .info-grid { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   PREVENTA — modal de reserva
+   ========================================================= */
+.pv-meta { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-ink); font-weight: 600; margin: -8px 0 16px; }
+.pv-list { list-style: none; margin: 0 0 24px; padding: 0; border-top: 1px solid var(--line); }
+.pv-list li { padding: 10px 0 10px 26px; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--ink-2); position: relative; }
+.pv-list li::before { content: ""; position: absolute; left: 2px; top: 18px; width: 12px; height: 1px; background: var(--gold); }
+.pv-form label { display: block; margin-bottom: 16px; }
+.pv-form label > span { display: block; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--muted); margin-bottom: 7px; }
+.pv-form label > span em { text-transform: none; letter-spacing: .04em; font-style: normal; font-weight: 400; }
+.pv-form input {
+  width: 100%; height: 50px; padding: 0 14px; border: 1px solid var(--line-2); background: var(--paper);
+  font-size: 16px; color: var(--ink); transition: border-color .3s, background .3s;
+}
+.pv-form input::placeholder { color: #b9b8b4; }
+.pv-form input:focus { outline: none; border-color: var(--gold-ink); background: var(--paper-2); }
+.pv-form .btn { width: 100%; justify-content: center; gap: 12px; margin-top: 6px; }
+.pv-form .btn[disabled] { opacity: .6; }
+.pv-error { margin: 0 0 14px; padding: 10px 12px; border-left: 2px solid #9b4a4a; background: #f7eeee; color: #7c3a3a; font-size: 14px; }
+.pv-note { margin: 14px 0 0; font-size: 12px; color: var(--muted); line-height: 1.5; }
+.pv-badge {
+  display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px; border: 1px solid var(--gold);
+  color: var(--gold-ink); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 600;
+}
+.pv-badge i { width: 7px; height: 7px; background: var(--gold); border-radius: 50%; animation: ping 2s var(--ease) infinite; }
+.on-dark .pv-badge { color: var(--cream); border-color: var(--cream-2); }
+.on-dark .pv-badge i { background: var(--cream); }

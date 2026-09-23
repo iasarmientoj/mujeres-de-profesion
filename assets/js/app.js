@@ -486,9 +486,102 @@
   });
 
   /* =========================================================
+     PREVENTA — modal de reserva
+     Envía al formulario de Google por POST dentro de un iframe
+     oculto (no hace falta servidor). Si falla, ofrece el
+     formulario prellenado como respaldo.
+     ========================================================= */
+  const Preventa = {
+    open(origen) {
+      const P = MDP.preventa || {};
+      if (!P.activa) { toast("La preventa se abrirá muy pronto."); return; }
+      const body = Modal.open(`
+        <span class="eyebrow">Preventa · primera edición</span>
+        <h3>${esc(P.titulo)}</h3>
+        <p class="m-sub">${esc(P.intro)}</p>
+        ${(P.precio || P.entrega) ? `<p class="pv-meta">${[P.precio, P.entrega].filter(Boolean).map(esc).join(" · ")}</p>` : ""}
+        <ul class="pv-list">${(P.beneficios || []).map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+        <form class="pv-form" novalidate>
+          <label><span>Nombre y apellido</span><input name="nombre" type="text" autocomplete="name" required placeholder="Tu nombre"></label>
+          <label><span>Correo electrónico</span><input name="correo" type="email" autocomplete="email" required placeholder="tucorreo@ejemplo.com"></label>
+          <label><span>WhatsApp <em>(con código de país)</em></span><input name="whatsapp" type="tel" autocomplete="tel" required placeholder="+57 300 000 0000"></label>
+          <p class="pv-error" role="alert" hidden></p>
+          <button class="btn solid" type="submit">Reservar mi ejemplar ${I.arr}</button>
+          <p class="pv-note">${esc(P.aviso)}</p>
+        </form>`, "var(--gold-ink)");
+
+      const form = $("form", body), err = $(".pv-error", body), btn = $("button[type=submit]", form);
+      const val = (n) => form.elements[n].value.trim();
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nombre = val("nombre"), correo = val("correo"), whatsapp = val("whatsapp");
+        const fallo = !nombre ? "Escribe tu nombre."
+          : !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(correo) ? "Revisa tu correo electrónico."
+          : whatsapp.replace(/\D/g, "").length < 7 ? "Escribe tu WhatsApp con el código de país."
+          : "";
+        if (fallo) { err.textContent = fallo; err.hidden = false; return; }
+        err.hidden = true;
+        btn.disabled = true; btn.textContent = "Enviando…";
+        this.enviar({ nombre, correo, whatsapp, origen }, () => this.gracias(body, P), () => this.respaldo(body, P, { nombre, correo, whatsapp }));
+      });
+    },
+
+    enviar(datos, ok, fail) {
+      const P = MDP.preventa, C = P.campos;
+      const id = "pv-" + Date.now();
+      const iframe = document.createElement("iframe");
+      iframe.name = id; iframe.style.display = "none";
+      document.body.append(iframe);
+      const form = document.createElement("form");
+      form.action = P.formAction; form.method = "POST"; form.target = id; form.style.display = "none";
+      const add = (k, v) => { const i = document.createElement("input"); i.name = k; i.value = v; form.append(i); };
+      add(C.nombre, datos.nombre); add(C.correo, datos.correo); add(C.whatsapp, datos.whatsapp);
+      document.body.append(form);
+      let listo = false;
+      const limpiar = () => { setTimeout(() => { form.remove(); iframe.remove(); }, 500); };
+      iframe.addEventListener("load", () => { if (listo) return; listo = true; clearTimeout(t); limpiar(); ok(); });
+      const t = setTimeout(() => { if (listo) return; listo = true; limpiar(); fail(); }, 8000);
+      try { form.submit(); } catch (e) { listo = true; clearTimeout(t); limpiar(); fail(); }
+    },
+
+    gracias(body, P) {
+      body.innerHTML = `<div class="success">
+        <span class="eyebrow no-rule">Preventa</span>
+        <h3 style="margin-top:14px">¡Quedaste en la lista!</h3>
+        <p class="m-sub">${esc(P.gracias)}</p>
+        <div class="actions" style="justify-content:center">
+          <button class="btn solid" data-close>Seguir explorando</button>
+          <a class="btn" href="${R("podcast/")}">Escuchar el podcast ${I.arr}</a>
+        </div></div>`;
+      $("[data-close]", body).onclick = () => Modal.close();
+      const r = $(".box", Modal.el).getBoundingClientRect();
+      burst(r.left + r.width / 2, r.top + 120, "var(--gold)");
+    },
+
+    respaldo(body, P, datos) {
+      const u = new URL(P.formUrl.includes("/d/e/") ? P.formAction.replace("formResponse", "viewform") : P.formAction.replace("formResponse", "viewform"));
+      u.searchParams.set("usp", "pp_url");
+      u.searchParams.set(P.campos.nombre, datos.nombre);
+      u.searchParams.set(P.campos.correo, datos.correo);
+      u.searchParams.set(P.campos.whatsapp, datos.whatsapp);
+      body.innerHTML = `<span class="eyebrow">Preventa</span>
+        <h3>Terminemos por aquí</h3>
+        <p class="m-sub">No pudimos enviar tus datos desde el sitio. Abre el formulario —ya va con tus datos escritos— y pulsa <strong>Enviar</strong>.</p>
+        <div class="actions"><a class="btn solid" href="${esc(u.toString())}" target="_blank" rel="noopener">Abrir el formulario ${I.arr}</a><button class="btn" data-close>Cerrar</button></div>`;
+      $("[data-close]", body).onclick = () => Modal.close();
+    }
+  };
+
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-order]");
+    if (b) { e.preventDefault(); Preventa.open(b.dataset.order || document.body.dataset.page || ""); }
+  });
+
+  /* =========================================================
      Exponer utilidades a pages.js
      ========================================================= */
-  window.MDPApp = { $, $$, R, IMG, W, esc, I, stepline, folio, Store, allStickers, stickerById, stickerCard, collectButton, openCollect, LB, Modal, toast, burst, initReveal, updateCount, refreshCollectButtons };
+  window.MDPApp = { $, $$, R, IMG, W, esc, I, stepline, folio, Store, Preventa, allStickers, stickerById, stickerCard, collectButton, openCollect, LB, Modal, toast, burst, initReveal, updateCount, refreshCollectButtons };
 
   /* ---------- Arranque ---------- */
   const bare = document.body.dataset.bare === "1";

@@ -709,11 +709,8 @@
         .concat(MDP.women.slice(4).map((w) => [w.nombre, w.profesion, w.paginasLibro, R(`mujeres/${w.slug}/`)]));
       toc.innerHTML = items.map(([n, p, pg, h]) => `<a href="${h}"><span><span class="n">${esc(n)}</span><br><span class="p">${esc(p)}</span></span><span class="dots"></span><span class="pg">${pg}</span></a>`).join("");
     }
-    $$("[data-order]").forEach((a) => {
-      if (MDP.site.bookOrderUrl) { a.href = MDP.site.bookOrderUrl; a.target = "_blank"; a.rel = "noopener"; }
-      else if (MDP.site.contactEmail) a.href = `mailto:${MDP.site.contactEmail}?subject=${encodeURIComponent("Quiero el libro Mujeres de Profesión")}`;
-      else { a.removeAttribute("href"); a.title = "El canal de pedidos se habilitará muy pronto"; a.addEventListener("click", () => A.toast("El canal de pedidos se habilitará muy pronto.")); a.style.cursor = "pointer"; }
-    });
+    // los botones [data-order] abren el modal de preventa (app.js)
+    $$("[data-order]").forEach((a) => { a.style.cursor = "pointer"; });
     $$(".spread img").forEach((im, i, all) => im.parentElement.addEventListener("click", () => A.LB.open(all.map((x) => ({ src: x.src, cap: x.alt, note: "Vista previa · el libro solo existe en papel" })), i)));
   };
 
