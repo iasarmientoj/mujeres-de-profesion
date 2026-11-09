@@ -23,6 +23,25 @@ MDP.site = {
 };
 
 /* ---------------------------------------------------------
+   MODO ESPERA  ("muy pronto")
+   Con activa: true, TODAS las páginas del sitio —incluidas las
+   de los códigos QR— muestran una sola pantalla de espera.
+   Cuando el libro esté impreso, pon activa: false y el sitio
+   vuelve a funcionar completo.
+   --------------------------------------------------------- */
+MDP.espera = {
+  /* El interruptor está en assets/js/espera.js (se carga antes
+     que todo). Aquí solo viven los textos de esa pantalla. */
+  activa: window.MDP_ESPERA !== false,
+  etiqueta: "Muy pronto",
+  titulo: "El fotolibro está en imprenta",
+  texto: "Mujeres de Profesión reúne ocho historias de mujeres en ingeniería y geociencias. Este sitio es su extensión: más fotografías, la investigación y el podcast en su propia voz. Abrirá el día en que el libro salga de imprenta.",
+  nota: "¿Escaneaste un código del libro? Guarda este enlace: te llevará a la historia completa cuando abramos.",
+  mostrarPreventa: true,
+  firma: "Ingeniería | Geología"
+};
+
+/* ---------------------------------------------------------
    PREVENTA DEL LIBRO
    El modal envía los datos al formulario de Google (misma hoja
    de cálculo). Para desactivarla: activa: false.

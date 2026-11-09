@@ -650,7 +650,51 @@
      ========================================================= */
   window.MDPApp = { $, $$, R, IMG, W, esc, I, stepline, folio, Store, Preventa, allStickers, stickerById, stickerCard, collectButton, openCollect, LB, Modal, toast, burst, initReveal, updateCount, refreshCollectButtons };
 
+  /* =========================================================
+     MODO ESPERA — una sola pantalla mientras el libro se imprime
+     ========================================================= */
+  function renderEspera() {
+    const E = MDP.espera;
+    const pre = MDP.preventa && MDP.preventa.activa && E.mostrarPreventa;
+    document.head.insertAdjacentHTML("beforeend", '<meta name="robots" content="noindex">');
+    document.body.className = "espera-body";
+    document.body.dataset.nav = "";
+    document.body.innerHTML = `
+      <main id="main" class="espera">
+        <div class="hero-dots" aria-hidden="true"></div>
+        ${stepline("light-rule")}
+        <div class="wrap espera-in crop"><span class="crop-b"></span>
+          <div class="book3d">
+            <div class="bk">
+              <div class="spine"></div>
+              <div class="cover">
+                <img src="${R("assets/brand/logo-dark.png")}" alt="Mujeres de Profesión">
+                <div class="sub">Ingeniería | Geología<hr><span>ENGINEERING | GEOLOGY</span></div>
+              </div>
+              <div class="pages"></div>
+            </div>
+          </div>
+          <div class="espera-copy">
+            <img class="espera-logo" src="${R("assets/brand/logo-dark.png")}" alt="Mujeres de Profesión">
+            <span class="pv-badge"><i></i>${esc(E.etiqueta)}</span>
+            <h1>${esc(E.titulo)}</h1>
+            <p class="lead">${esc(E.texto)}</p>
+            ${E.nota ? `<p class="espera-nota">${esc(E.nota)}</p>` : ""}
+            ${pre ? `<div class="espera-cta"><button class="btn solid" data-order="espera">${esc(MDP.preventa.titulo)} ${I.arr}</button></div>
+                     <p class="espera-min">Reservar no tiene ningún costo: te escribimos apenas el libro salga de imprenta.</p>` : ""}
+          </div>
+        </div>
+        <footer class="espera-pie">
+          <img src="${R("assets/brand/apoyos.png")}" alt="Con el apoyo de ACOFI, Consejo Profesional Nacional de Ingenierías Eléctrica, Mecánica y Profesiones Afines, Consejo Profesional de Geología y Pueblo Villano" loading="lazy">
+          <p>${esc(MDP.site.title)} · ${esc(E.firma)} · ISBN ${esc(MDP.site.isbn)}</p>
+        </footer>
+      </main>`;
+    initReveal();
+  }
+
   /* ---------- Arranque ---------- */
+  if (MDP.espera && MDP.espera.activa) { renderEspera(); return; }
+
   const bare = document.body.dataset.bare === "1";
   if (!bare) { renderBarra(); renderHeader(); }
   document.addEventListener("DOMContentLoaded", () => {

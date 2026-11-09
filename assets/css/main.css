@@ -1137,3 +1137,47 @@ body.has-bar { --bar-h: 42px; --header-h: calc(var(--bar-h) + var(--nav-h)); }
   .pv-welcome-img { min-height: 190px; }
   .modal .box.wide { max-height: calc(100vh - 24px); }
 }
+
+/* =========================================================
+   MODO ESPERA — pantalla única mientras el libro se imprime
+   ========================================================= */
+/* Evita que el sitio se vea por un instante antes de que el
+   script dibuje la pantalla de espera. */
+.en-espera #main:not(.espera), .en-espera .site-header, .en-espera .site-footer,
+.en-espera .pv-bar, .en-espera .mobile-menu, .en-espera .skip { display: none !important; }
+.espera-body { background: var(--paper-2); }
+.espera { position: relative; min-height: 100svh; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding: clamp(40px, 7vh, 90px) 0 0; }
+.espera > .stepline { position: absolute; top: 34px; left: 0; right: 0; opacity: .9; }
+.espera .hero-dots { mask-image: radial-gradient(ellipse at 30% 45%, #000 0%, transparent 72%); -webkit-mask-image: radial-gradient(ellipse at 30% 45%, #000 0%, transparent 72%); }
+.espera-in {
+  position: relative; display: grid; grid-template-columns: 1fr 1.02fr; align-items: center;
+  gap: clamp(30px, 6vw, 90px); background: var(--paper); border: 1px solid var(--line-2);
+  padding: clamp(30px, 5vw, 70px); margin-top: auto; margin-bottom: auto; max-width: 1140px;
+}
+.espera .book3d { padding: 0; }
+.espera .book3d .bk { width: min(86%, 380px); transform: rotateY(-20deg) rotateX(5deg); animation: espera-book 9s ease-in-out infinite; }
+@keyframes espera-book { 0%, 100% { transform: rotateY(-20deg) rotateX(5deg); } 50% { transform: rotateY(-11deg) rotateX(2deg); } }
+.espera-logo { width: 190px; margin-bottom: 26px; }
+.espera-copy h1 { font-size: clamp(32px, 3.9vw, 56px); font-weight: 300; letter-spacing: -.02em; margin: 20px 0 20px; max-width: 16ch; }
+.espera-copy .lead { max-width: 52ch; }
+.espera-nota {
+  margin: 22px 0 0; padding: 14px 16px; border-left: 1px solid var(--gold);
+  background: var(--paper-2); font-size: 14.5px; font-style: italic; color: var(--ink-2); max-width: 52ch;
+}
+.espera-cta { margin-top: 28px; }
+.espera-cta .btn { min-height: 56px; }
+.espera-min { margin: 12px 0 0; font-size: 12.5px; color: var(--muted); max-width: 46ch; }
+.espera-pie { padding: clamp(26px, 4vw, 44px) var(--gutter); display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.espera-pie img { width: min(100%, 620px); opacity: .6; filter: grayscale(1); }
+.espera-pie p { margin: 0; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 880px) {
+  .espera { justify-content: flex-start; padding-top: 70px; }
+  .espera-in { grid-template-columns: 1fr; text-align: left; padding: 30px 24px 36px; }
+  .espera .book3d { order: -1; }
+  .espera .book3d .bk { width: min(62%, 240px); }
+  .espera .book3d .cover img { width: 60%; margin-top: -12%; }
+  .espera .book3d .cover .sub { bottom: 13%; }
+  .espera-logo { width: 150px; margin-bottom: 18px; }
+  .espera > .stepline { top: 18px; }
+  .espera-cta .btn { width: 100%; justify-content: center; gap: 14px; }
+}
