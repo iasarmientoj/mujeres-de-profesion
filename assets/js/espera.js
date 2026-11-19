@@ -9,6 +9,6 @@
    pon  false  en la línea de abajo y el sitio vuelve a abrir
    completo (no hace falta tocar nada más).
    ========================================================= */
-window.MDP_ESPERA = true;
+window.MDP_ESPERA = false;
 
 if (window.MDP_ESPERA) document.documentElement.classList.add("en-espera");
