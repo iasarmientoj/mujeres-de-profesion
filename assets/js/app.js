@@ -487,7 +487,7 @@
   });
 
   /* =========================================================
-     PREVENTA — modal de reserva
+     COMPRA — modal de pedido
      Envía al formulario de Google por POST dentro de un iframe
      oculto (no hace falta servidor). Si falla, ofrece el
      formulario prellenado como respaldo.
@@ -495,9 +495,9 @@
   const Preventa = {
     open(origen) {
       const P = MDP.preventa || {};
-      if (!P.activa) { toast("La preventa se abrirá muy pronto."); return; }
+      if (!P.activa) { toast("Muy pronto habilitaremos los pedidos."); return; }
       const body = Modal.open(`
-        <span class="eyebrow">Preventa · primera edición</span>
+        <span class="eyebrow">Primera edición · ya disponible</span>
         <h3>${esc(P.titulo)}</h3>
         <p class="m-sub">${esc(P.intro)}</p>
         ${(P.precio || P.entrega) ? `<p class="pv-meta">${[P.precio, P.entrega].filter(Boolean).map(esc).join(" · ")}</p>` : ""}
@@ -507,7 +507,7 @@
           <label><span>Correo electrónico</span><input name="correo" type="email" autocomplete="email" required placeholder="tucorreo@ejemplo.com"></label>
           <label><span>WhatsApp <em>(con código de país)</em></span><input name="whatsapp" type="tel" autocomplete="tel" required placeholder="+57 300 000 0000"></label>
           <p class="pv-error" role="alert" hidden></p>
-          <button class="btn solid" type="submit">Reservar mi ejemplar ${I.arr}</button>
+          <button class="btn solid" type="submit">Pedir mi ejemplar ${I.arr}</button>
           <p class="pv-note">${esc(P.aviso)}</p>
         </form>`, "var(--gold-ink)");
 
@@ -550,7 +550,7 @@
       Prefs.write({ reservado: Date.now() });
       const bar = $(".pv-bar"); if (bar) { bar.remove(); document.body.classList.remove("has-bar"); }
       body.innerHTML = `<div class="success">
-        <span class="eyebrow no-rule">Preventa</span>
+        <span class="eyebrow no-rule">Tu pedido</span>
         <h3 style="margin-top:14px">¡Quedaste en la lista!</h3>
         <p class="m-sub">${esc(P.gracias)}</p>
         <div class="actions" style="justify-content:center">
@@ -568,7 +568,7 @@
       u.searchParams.set(P.campos.nombre, datos.nombre);
       u.searchParams.set(P.campos.correo, datos.correo);
       u.searchParams.set(P.campos.whatsapp, datos.whatsapp);
-      body.innerHTML = `<span class="eyebrow">Preventa</span>
+      body.innerHTML = `<span class="eyebrow">Tu pedido</span>
         <h3>Terminemos por aquí</h3>
         <p class="m-sub">No pudimos enviar tus datos desde el sitio. Abre el formulario —ya va con tus datos escritos— y pulsa <strong>Enviar</strong>.</p>
         <div class="actions"><a class="btn solid" href="${esc(u.toString())}" target="_blank" rel="noopener">Abrir el formulario ${I.arr}</a><button class="btn" data-close>Cerrar</button></div>`;
@@ -629,7 +629,7 @@
         <div class="pv-welcome">
           <div class="pv-welcome-img"><img src="${R(B.imagen)}" alt="Portada del fotolibro Mujeres de Profesión"><span class="pv-welcome-tag">25 × 25 cm · 8 historias</span></div>
           <div class="pv-welcome-copy">
-            <span class="pv-badge"><i></i>Preventa abierta</span>
+            <span class="pv-badge"><i></i>Ya disponible</span>
             <h3>${esc(B.titulo)}</h3>
             <p class="m-sub">${esc(B.texto)}</p>
             <div class="actions">

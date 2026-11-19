@@ -42,7 +42,7 @@ MDP.espera = {
 };
 
 /* ---------------------------------------------------------
-   PREVENTA DEL LIBRO
+   COMPRA DEL LIBRO
    El modal envía los datos al formulario de Google (misma hoja
    de cálculo). Para desactivarla: activa: false.
    --------------------------------------------------------- */
@@ -55,23 +55,23 @@ MDP.preventa = {
     correo: "entry.1490336266",
     whatsapp: "entry.2037583735"
   },
-  titulo: "Reserva tu ejemplar",
-  intro: "El fotolibro está en imprenta y abrimos la preventa de la primera edición. Déjanos tus datos y te escribimos apenas salga, con el precio y las opciones de envío.",
+  titulo: "Adquiere tu ejemplar",
+  intro: "El fotolibro ya está impreso. Déjanos tus datos y te contactamos para coordinar el pago y el envío de tu ejemplar de la primera edición.",
   entrega: "",          // p. ej. "Entrega estimada: noviembre de 2026"
-  precio: "",           // p. ej. "$ 000.000 COP (precio de preventa)"
+  precio: "",           // p. ej. "$ 000.000 COP"
   beneficios: [
-    "Los primeros ejemplares de la primera edición",
-    "Reserva sin pago: primero confirmamos disponibilidad y envío",
+    "Primera edición · 25 × 25 cm · bilingüe español e inglés",
+    "Coordinamos el envío a tu ciudad",
     "Te contactamos por WhatsApp o correo"
   ],
-  gracias: "Gracias. Quedaste en la lista de la preventa: te escribiremos apenas el libro salga de imprenta.",
+  gracias: "Gracias. Te escribiremos muy pronto para coordinar el pago y el envío de tu ejemplar.",
   aviso: "Usamos tu nombre, correo y WhatsApp únicamente para contactarte sobre el libro.",
 
   /* Barra superior del sitio */
   barra: {
     activa: true,
-    texto: "Preventa abierta · el fotolibro está en imprenta.",
-    enlace: "Reserva tu ejemplar",
+    texto: "El fotolibro ya está impreso.",
+    enlace: "Adquiere tu ejemplar",
     repetirDias: 3        // días que permanece cerrada tras pulsar la X
   },
 
@@ -81,9 +81,9 @@ MDP.preventa = {
     repetirDias: 7,       // 0 = en cada visita
     esperaMs: 1600,       // tiempo antes de aparecer
     imagen: "assets/img/libro/p01.jpg",
-    titulo: "El fotolibro está en imprenta",
-    texto: "Mujeres de Profesión reúne ocho historias de mujeres en ingeniería y geociencias en un libro de 25 × 25 cm que existe solo en papel. Abrimos la preventa de la primera edición: reservar no tiene ningún costo.",
-    boton: "Reservar mi ejemplar",
+    titulo: "El fotolibro ya está impreso",
+    texto: "Mujeres de Profesión reúne ocho historias de mujeres en ingeniería y geociencias en un libro de 25 × 25 cm que existe solo en papel. Pide tu ejemplar de la primera edición.",
+    boton: "Adquirir mi ejemplar",
     secundario: "Seguir explorando el sitio"
   }
 };
