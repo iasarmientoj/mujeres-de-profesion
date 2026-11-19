@@ -43,8 +43,10 @@ MDP.espera = {
 
 /* ---------------------------------------------------------
    COMPRA DEL LIBRO
-   El modal envía los datos al formulario de Google (misma hoja
-   de cálculo). Para desactivarla: activa: false.
+   El modal recoge los datos del pedido y los envía al
+   formulario de Google (la misma hoja de cálculo). Al terminar,
+   si MDP.pago está activo, ofrece el botón de pago.
+   Para desactivar los pedidos: activa: false.
    --------------------------------------------------------- */
 MDP.preventa = {
   activa: true,
@@ -53,24 +55,31 @@ MDP.preventa = {
   campos: {
     nombre: "entry.1164993366",
     correo: "entry.1490336266",
-    whatsapp: "entry.2037583735"
+    whatsapp: "entry.2037583735",
+    /* Para el envío. Si algún día quitas estas preguntas del
+       formulario de Google, deja el valor vacío y el campo
+       desaparece solo del modal. */
+    ciudad: "entry.411984244",
+    direccion: "entry.81227703"
   },
   titulo: "Adquiere tu ejemplar",
-  intro: "El fotolibro ya está impreso. Déjanos tus datos y te contactamos para coordinar el pago y el envío de tu ejemplar de la primera edición.",
-  entrega: "",          // p. ej. "Entrega estimada: noviembre de 2026"
-  precio: "",           // p. ej. "$ 000.000 COP"
+  intro: "El fotolibro ya está impreso. Déjanos tus datos y coordinamos el pago y el envío de tu ejemplar de la primera edición.",
+  precio: "$ 100.000 COP",
+  entrega: "Envío incluido",
+  cobertura: "Por ahora enviamos únicamente dentro de Colombia.",
   beneficios: [
     "Primera edición · 25 × 25 cm · bilingüe español e inglés",
-    "Coordinamos el envío a tu ciudad",
-    "Te contactamos por WhatsApp o correo"
+    "$ 100.000 con el envío incluido a cualquier ciudad de Colombia",
+    "Te contactamos por WhatsApp o correo para confirmar la entrega"
   ],
   gracias: "Gracias. Te escribiremos muy pronto para coordinar el pago y el envío de tu ejemplar.",
+  graciasPago: "Ya tenemos tus datos. Completa el pago de $ 100.000 —envío incluido— y te confirmamos el despacho por WhatsApp.",
   aviso: "Usamos tu nombre, correo y WhatsApp únicamente para contactarte sobre el libro.",
 
   /* Barra superior del sitio */
   barra: {
     activa: true,
-    texto: "El fotolibro ya está impreso.",
+    texto: "Ya impreso · $ 100.000 con envío incluido en Colombia.",
     enlace: "Adquiere tu ejemplar",
     repetirDias: 3        // días que permanece cerrada tras pulsar la X
   },
@@ -82,10 +91,47 @@ MDP.preventa = {
     esperaMs: 1600,       // tiempo antes de aparecer
     imagen: "assets/img/libro/p01.jpg",
     titulo: "El fotolibro ya está impreso",
-    texto: "Mujeres de Profesión reúne ocho historias de mujeres en ingeniería y geociencias en un libro de 25 × 25 cm que existe solo en papel. Pide tu ejemplar de la primera edición.",
+    texto: "Ocho historias de mujeres en ingeniería y geociencias en un libro de 25 × 25 cm que existe solo en papel. $ 100.000 con el envío incluido a cualquier ciudad de Colombia.",
     boton: "Adquirir mi ejemplar",
     secundario: "Seguir explorando el sitio"
   }
+};
+
+/* ---------------------------------------------------------
+   PASARELA DE PAGO — Mercado Pago
+   Cómo activarla, cuando llegue la cuenta:
+     1. En Mercado Pago: Cobrar → Link de pago. Monto 100000,
+        concepto "Fotolibro Mujeres de Profesión".
+     2. Elige cuándo recibir el dinero (14 días = menor comisión).
+     3. Copia el link (algo como https://mpago.la/XXXXXXX)
+        y pégalo abajo en "link".
+     4. Cambia activa a true. Nada más: el botón de pago aparece
+        solo al final del modal de pedido.
+   Si prefieres cobrar con otra pasarela (ePayco, Bold), basta
+   con cambiar el link y el nombre: el flujo es idéntico.
+   --------------------------------------------------------- */
+MDP.pago = {
+  activa: true,
+  pasarela: "Mercado Pago",
+  link: "https://mpago.li/2FpTV2i",
+  /* Link de monto fijo ($ 100.000, "Fotolibro Mujeres de Profesión").
+     Si algún día cambia el precio hay que crear un link nuevo en
+     Mercado Pago y pegarlo aquí. El de monto abierto de respaldo
+     es https://link.mercadopago.com.co/pueblovillano : si lo usas,
+     pon montoAbierto en true para que se muestre la instrucción. */
+  montoAbierto: false,
+  instruccion: "En Mercado Pago escribe el monto $ 100.000 y, en la descripción, tu nombre completo.",
+  valor: "$ 100.000 COP · envío incluido",
+  boton: "Pagar con Mercado Pago",
+  nota: "El pago se realiza en Mercado Pago. No almacenamos ningún dato de tu tarjeta.",
+  metodos: [
+    "Tarjeta de crédito o débito",
+    "PSE y transferencia bancaria",
+    "Efectivo en Efecty o Baloto",
+    "Saldo en Mercado Pago"
+  ],
+  /* Mensaje mientras la pasarela sigue apagada */
+  pendiente: "Te escribimos por WhatsApp con el medio de pago y el valor del ejemplar."
 };
 
 MDP.credits = [

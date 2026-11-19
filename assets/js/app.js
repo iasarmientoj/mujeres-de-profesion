@@ -496,6 +496,8 @@
     open(origen) {
       const P = MDP.preventa || {};
       if (!P.activa) { toast("Muy pronto habilitaremos los pedidos."); return; }
+      const C = P.campos || {}, G = MDP.pago || {};
+      const conPago = !!(G.activa && G.link);
       const body = Modal.open(`
         <span class="eyebrow">Primera edición · ya disponible</span>
         <h3>${esc(P.titulo)}</h3>
@@ -506,8 +508,12 @@
           <label><span>Nombre y apellido</span><input name="nombre" type="text" autocomplete="name" required placeholder="Tu nombre"></label>
           <label><span>Correo electrónico</span><input name="correo" type="email" autocomplete="email" required placeholder="tucorreo@ejemplo.com"></label>
           <label><span>WhatsApp <em>(con código de país)</em></span><input name="whatsapp" type="tel" autocomplete="tel" required placeholder="+57 300 000 0000"></label>
+          ${C.ciudad ? `<label><span>Ciudad</span><input name="ciudad" type="text" autocomplete="address-level2" required placeholder="Bogotá"></label>` : ""}
+          ${C.direccion ? `<label><span>Dirección de envío</span><input name="direccion" type="text" autocomplete="street-address" required placeholder="Calle 00 # 00 - 00, apto 000"></label>` : ""}
           <p class="pv-error" role="alert" hidden></p>
-          <button class="btn solid" type="submit">Pedir mi ejemplar ${I.arr}</button>
+          <button class="btn solid" type="submit">${conPago ? "Continuar al pago" : "Pedir mi ejemplar"} ${I.arr}</button>
+          ${conPago && (G.metodos || []).length ? `<p class="pv-note">Pagas en ${esc(G.pasarela || "la pasarela")}: ${(G.metodos || []).map(esc).join(" · ")}.</p>` : ""}
+          ${P.cobertura ? `<p class="pv-note">${esc(P.cobertura)}</p>` : ""}
           <p class="pv-note">${esc(P.aviso)}</p>
         </form>`, "var(--gold-ink)");
 
@@ -517,14 +523,18 @@
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         const nombre = val("nombre"), correo = val("correo"), whatsapp = val("whatsapp");
+        const ciudad = C.ciudad ? val("ciudad") : "", direccion = C.direccion ? val("direccion") : "";
         const fallo = !nombre ? "Escribe tu nombre."
           : !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(correo) ? "Revisa tu correo electrónico."
           : whatsapp.replace(/\D/g, "").length < 7 ? "Escribe tu WhatsApp con el código de país."
+          : (C.ciudad && !ciudad) ? "Escribe la ciudad de envío."
+          : (C.direccion && direccion.length < 6) ? "Escribe la dirección completa de envío."
           : "";
         if (fallo) { err.textContent = fallo; err.hidden = false; return; }
         err.hidden = true;
         btn.disabled = true; btn.textContent = "Enviando…";
-        this.enviar({ nombre, correo, whatsapp, origen }, () => this.gracias(body, P), () => this.respaldo(body, P, { nombre, correo, whatsapp }));
+        const datos = { nombre, correo, whatsapp, ciudad, direccion, origen };
+        this.enviar(datos, () => this.gracias(body, P), () => this.respaldo(body, P, datos));
       });
     },
 
@@ -539,6 +549,8 @@
       cuerpo.set(C.nombre, datos.nombre);
       cuerpo.set(C.correo, datos.correo);
       cuerpo.set(C.whatsapp, datos.whatsapp);
+      if (C.ciudad && datos.ciudad) cuerpo.set(C.ciudad, datos.ciudad);
+      if (C.direccion && datos.direccion) cuerpo.set(C.direccion, datos.direccion);
 
       if (!window.fetch) return this.enviarIframe(datos, ok, fail);
 
@@ -568,6 +580,8 @@
       form.action = P.formAction; form.method = "POST"; form.target = id; form.style.display = "none";
       const add = (k, v) => { const i = document.createElement("input"); i.name = k; i.value = v; form.append(i); };
       add(C.nombre, datos.nombre); add(C.correo, datos.correo); add(C.whatsapp, datos.whatsapp);
+      if (C.ciudad && datos.ciudad) add(C.ciudad, datos.ciudad);
+      if (C.direccion && datos.direccion) add(C.direccion, datos.direccion);
       document.body.append(form);
       let listo = false;
       const limpiar = () => { setTimeout(() => { form.remove(); iframe.remove(); }, 500); };
@@ -579,14 +593,21 @@
     gracias(body, P) {
       Prefs.write({ reservado: Date.now() });
       const bar = $(".pv-bar"); if (bar) { bar.remove(); document.body.classList.remove("has-bar"); }
+      const G = MDP.pago || {};
+      const pagar = !!(G.activa && G.link);
       body.innerHTML = `<div class="success">
         <span class="eyebrow no-rule">Tu pedido</span>
         <h3 style="margin-top:14px">¡Recibimos tu pedido!</h3>
-        <p class="m-sub">${esc(P.gracias)}</p>
+        <p class="m-sub">${esc(pagar ? (P.graciasPago || P.gracias) : (G.pendiente || P.gracias))}</p>
+        ${pagar && G.valor ? `<p class="pv-meta" style="text-align:center;margin:18px 0 14px">${esc(G.valor)}</p>` : ""}
+        ${pagar && G.montoAbierto && G.instruccion ? `<p class="pv-aviso">${esc(G.instruccion)}</p>` : ""}
         <div class="actions" style="justify-content:center">
-          <button class="btn solid" data-close>Seguir explorando</button>
-          <a class="btn" href="${R("podcast/")}">Escuchar el podcast ${I.arr}</a>
-        </div></div>`;
+          ${pagar
+            ? `<a class="btn solid" href="${esc(G.link)}" target="_blank" rel="noopener">${esc(G.boton || "Ir a pagar")} ${I.arr}</a><button class="btn" data-close>Pagar más tarde</button>`
+            : `<button class="btn solid" data-close>Seguir explorando</button><a class="btn" href="${R("podcast/")}">Escuchar el podcast ${I.arr}</a>`}
+        </div>
+        ${pagar && G.nota ? `<p class="pv-note" style="text-align:center">${esc(G.nota)}</p>` : ""}
+        </div>`;
       $("[data-close]", body).onclick = () => Modal.close();
       const r = $(".box", Modal.el).getBoundingClientRect();
       burst(r.left + r.width / 2, r.top + 120, "var(--gold)");
@@ -598,6 +619,8 @@
       u.searchParams.set(P.campos.nombre, datos.nombre);
       u.searchParams.set(P.campos.correo, datos.correo);
       u.searchParams.set(P.campos.whatsapp, datos.whatsapp);
+      if (P.campos.ciudad && datos.ciudad) u.searchParams.set(P.campos.ciudad, datos.ciudad);
+      if (P.campos.direccion && datos.direccion) u.searchParams.set(P.campos.direccion, datos.direccion);
       body.innerHTML = `<span class="eyebrow">Tu pedido</span>
         <h3>Terminemos por aquí</h3>
         <p class="m-sub">Es posible que ya hayamos recibido tus datos, pero no pudimos confirmarlo desde el sitio. Para asegurarte, abre el formulario —ya va con tus datos escritos— y pulsa <strong>Enviar</strong>. Si llega dos veces, no hay ningún problema.</p>
