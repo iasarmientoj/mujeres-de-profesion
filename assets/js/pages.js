@@ -49,6 +49,20 @@
     const prog = $(".hero-progress", hero);
     const DUR = 5200;
 
+    /* La línea horizontal del hero no vive en un porcentaje fijo:
+       se coloca en el hueco que queda entre el gancho y el párrafo.
+       Así nunca cruza el texto, por largo que sea el gancho. */
+    const marco = $(".hero-frame", hero), guia = $(".guide-h", hero), sub = $(".hero-sub", hero);
+    const alinearGuia = () => {
+      if (!marco || !guia || !sub) return;
+      if (getComputedStyle(guia).display === "none") return;   // oculta en móvil
+      /* Se corrige sobre la posición que ya tiene: así da igual
+         desde dónde cuente el "top" del navegador. */
+      const objetivo = sub.getBoundingClientRect().top - 13;
+      const actual = guia.getBoundingClientRect().top;
+      guia.style.top = Math.max(0, Math.round(guia.offsetTop + (objetivo - actual))) + "px";
+    };
+
     // Una frase gancho por mujer, en orden aleatorio (distinto en cada visita)
     let seen = {};
     try { seen = JSON.parse(localStorage.getItem("mdp-hooks") || "{}"); } catch (e) {}
@@ -85,6 +99,7 @@
       hookEl.classList.remove("hide");
       void hookEl.offsetWidth; // fuerza el reflujo para que la transición arranque
       hookEl.classList.add("show");
+      alinearGuia();
     };
 
     const go = (i) => {
@@ -125,6 +140,9 @@
     };
 
     bars.forEach((b) => (b.onclick = () => go(+b.dataset.i)));
+    addEventListener("resize", alinearGuia);
+    addEventListener("load", alinearGuia);
+
     const open = () => (location.href = hookEl.dataset.href);
     hookEl.addEventListener("click", open);
     stage.addEventListener("click", open);
