@@ -528,7 +528,37 @@
       });
     },
 
+    /* Envía al formulario de Google. Se usa fetch en modo no-cors:
+       la promesa se resuelve cuando la petición llegó, aunque no
+       podamos leer la respuesta (Google no permite leerla ni
+       mostrarla dentro de un iframe). Si fetch no existe o falla,
+       se intenta el envío clásico con un formulario oculto. */
     enviar(datos, ok, fail) {
+      const P = MDP.preventa, C = P.campos;
+      const cuerpo = new URLSearchParams();
+      cuerpo.set(C.nombre, datos.nombre);
+      cuerpo.set(C.correo, datos.correo);
+      cuerpo.set(C.whatsapp, datos.whatsapp);
+
+      if (!window.fetch) return this.enviarIframe(datos, ok, fail);
+
+      let resuelto = false;
+      const corte = setTimeout(() => { if (!resuelto) { resuelto = true; fail(); } }, 12000);
+      fetch(P.formAction, {
+        method: "POST", mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: cuerpo.toString()
+      }).then(() => {
+        if (resuelto) return;
+        resuelto = true; clearTimeout(corte); ok();
+      }).catch(() => {
+        if (resuelto) return;
+        resuelto = true; clearTimeout(corte);
+        this.enviarIframe(datos, ok, fail);
+      });
+    },
+
+    enviarIframe(datos, ok, fail) {
       const P = MDP.preventa, C = P.campos;
       const id = "pv-" + Date.now();
       const iframe = document.createElement("iframe");
@@ -551,7 +581,7 @@
       const bar = $(".pv-bar"); if (bar) { bar.remove(); document.body.classList.remove("has-bar"); }
       body.innerHTML = `<div class="success">
         <span class="eyebrow no-rule">Tu pedido</span>
-        <h3 style="margin-top:14px">¡Quedaste en la lista!</h3>
+        <h3 style="margin-top:14px">¡Recibimos tu pedido!</h3>
         <p class="m-sub">${esc(P.gracias)}</p>
         <div class="actions" style="justify-content:center">
           <button class="btn solid" data-close>Seguir explorando</button>
@@ -570,7 +600,7 @@
       u.searchParams.set(P.campos.whatsapp, datos.whatsapp);
       body.innerHTML = `<span class="eyebrow">Tu pedido</span>
         <h3>Terminemos por aquí</h3>
-        <p class="m-sub">No pudimos enviar tus datos desde el sitio. Abre el formulario —ya va con tus datos escritos— y pulsa <strong>Enviar</strong>.</p>
+        <p class="m-sub">Es posible que ya hayamos recibido tus datos, pero no pudimos confirmarlo desde el sitio. Para asegurarte, abre el formulario —ya va con tus datos escritos— y pulsa <strong>Enviar</strong>. Si llega dos veces, no hay ningún problema.</p>
         <div class="actions"><a class="btn solid" href="${esc(u.toString())}" target="_blank" rel="noopener">Abrir el formulario ${I.arr}</a><button class="btn" data-close>Cerrar</button></div>`;
       $("[data-close]", body).onclick = () => Modal.close();
     }
