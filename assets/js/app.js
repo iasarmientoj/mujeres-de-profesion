@@ -512,7 +512,7 @@
           ${C.direccion ? `<label><span>Dirección de envío</span><input name="direccion" type="text" autocomplete="street-address" required placeholder="Calle 00 # 00 - 00, apto 000"></label>` : ""}
           <p class="pv-error" role="alert" hidden></p>
           <button class="btn solid" type="submit">${conPago ? "Continuar al pago" : "Pedir mi ejemplar"} ${I.arr}</button>
-          ${conPago && (G.metodos || []).length ? `<p class="pv-note">Pagas en ${esc(G.pasarela || "la pasarela")}: ${(G.metodos || []).map(esc).join(" · ")}.</p>` : ""}
+          ${conPago ? `<p class="pv-note">Pagas en ${esc(G.pasarela || "la pasarela")}${G.titular ? `, a nombre de ${esc(G.titular)} —la editorial que publica el fotolibro—` : ""}${(G.metodos || []).length ? `: ${(G.metodos || []).map(esc).join(" · ")}` : ""}.</p>` : ""}
           ${P.cobertura ? `<p class="pv-note">${esc(P.cobertura)}</p>` : ""}
           <p class="pv-note">${esc(P.aviso)}</p>
         </form>`, "var(--gold-ink)");
@@ -596,19 +596,20 @@
       const G = MDP.pago || {};
       const pagar = !!(G.activa && G.link);
       body.innerHTML = `<div class="success">
-        <span class="eyebrow no-rule">Tu pedido</span>
-        <h3 style="margin-top:14px">¡Recibimos tu pedido!</h3>
+        <span class="eyebrow no-rule">${pagar ? "Paso 2 de 2" : "Tu pedido"}</span>
+        <h3 style="margin-top:14px">${esc(pagar ? (P.tituloPago || "Ahora realiza el pago") : "¡Recibimos tu pedido!")}</h3>
         <p class="m-sub">${esc(pagar ? (P.graciasPago || P.gracias) : (G.pendiente || P.gracias))}</p>
         ${pagar && G.valor ? `<p class="pv-meta" style="text-align:center;margin:18px 0 14px">${esc(G.valor)}</p>` : ""}
         ${pagar && G.montoAbierto && G.instruccion ? `<p class="pv-aviso">${esc(G.instruccion)}</p>` : ""}
         <div class="actions" style="justify-content:center">
           ${pagar
-            ? `<a class="btn solid" href="${esc(G.link)}" target="_blank" rel="noopener">${esc(G.boton || "Ir a pagar")} ${I.arr}</a><button class="btn" data-close>Pagar más tarde</button>`
+            ? `<a class="btn solid" href="${esc(G.link)}" target="_blank" rel="noopener">${esc(G.boton || "Ir a pagar")} ${I.arr}</a>`
             : `<button class="btn solid" data-close>Seguir explorando</button><a class="btn" href="${R("podcast/")}">Escuchar el podcast ${I.arr}</a>`}
         </div>
         ${pagar && G.nota ? `<p class="pv-note" style="text-align:center">${esc(G.nota)}</p>` : ""}
         </div>`;
-      $("[data-close]", body).onclick = () => Modal.close();
+      const cerrar = $("[data-close]", body);
+      if (cerrar) cerrar.onclick = () => Modal.close();
       const r = $(".box", Modal.el).getBoundingClientRect();
       burst(r.left + r.width / 2, r.top + 120, "var(--gold)");
     },

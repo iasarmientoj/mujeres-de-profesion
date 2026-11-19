@@ -73,7 +73,8 @@ MDP.preventa = {
     "Te contactamos por WhatsApp o correo para confirmar la entrega"
   ],
   gracias: "Gracias. Te escribiremos muy pronto para coordinar el pago y el envío de tu ejemplar.",
-  graciasPago: "Ya tenemos tus datos. Completa el pago de $ 100.000 —envío incluido— y te confirmamos el despacho por WhatsApp.",
+  graciasPago: "Ya guardamos tus datos. Falta un paso: completa el pago de $ 100.000 —envío incluido— y te confirmamos el despacho por WhatsApp.",
+  tituloPago: "Ahora realiza el pago",
   aviso: "Usamos tu nombre, correo y WhatsApp únicamente para contactarte sobre el libro.",
 
   /* Barra superior del sitio */
@@ -123,7 +124,8 @@ MDP.pago = {
   instruccion: "En Mercado Pago escribe el monto $ 100.000 y, en la descripción, tu nombre completo.",
   valor: "$ 100.000 COP · envío incluido",
   boton: "Pagar con Mercado Pago",
-  nota: "El pago se realiza en Mercado Pago. No almacenamos ningún dato de tu tarjeta.",
+  titular: "Pueblo Villano S.A.S.",
+  nota: "El cobro aparece a nombre de Pueblo Villano S.A.S., la editorial que publica el fotolibro. El pago se hace dentro de Mercado Pago: no almacenamos ningún dato de tu tarjeta.",
   metodos: [
     "Tarjeta de crédito o débito",
     "PSE y transferencia bancaria",
