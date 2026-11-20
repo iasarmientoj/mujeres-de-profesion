@@ -136,6 +136,26 @@ MDP.pago = {
   pendiente: "Te escribimos por WhatsApp con el medio de pago y el valor del ejemplar."
 };
 
+/* ---------------------------------------------------------
+   CON EL APOYO DE
+   La franja va en el inicio, justo debajo del hero; en las
+   demás páginas sigue en el pie. Cada logo es un PNG con fondo
+   transparente y todos comparten la misma altura de lienzo,
+   así conservan su tamaño relativo.
+   Para el de la Universidad Nacional: guarda el archivo en
+   assets/brand/apoyos/unal.png y quita las // de su línea.
+   --------------------------------------------------------- */
+MDP.apoyos = {
+  titulo: "Con el apoyo de",
+  logos: [
+    // { img: "assets/brand/apoyos/unal.png", alt: "Universidad Nacional de Colombia" },
+    { img: "assets/brand/apoyos/acofi.png", alt: "ACOFI – Asociación Colombiana de Facultades de Ingeniería" },
+    { img: "assets/brand/apoyos/consejo-ingenierias.png", alt: "Consejo Profesional Nacional de Ingenierías Eléctrica, Mecánica y Profesiones Afines" },
+    { img: "assets/brand/apoyos/cpg.png", alt: "CPG – Consejo Profesional de Geología" },
+    { img: "assets/brand/apoyos/pueblo-villano.png", alt: "Pueblo Villano" }
+  ]
+};
+
 MDP.credits = [
   { rol: "Directora de Proyecto", en: "Project Director", nombres: ["Olga Rosalba Rodríguez Jiménez"], org: "Universidad Nacional de Colombia" },
   { rol: "Coordinador Creativo y de Comunicaciones", en: "Creative and Communications Coordinator", nombres: ["Sergio David Niño López"] },

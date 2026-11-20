@@ -150,10 +150,7 @@
           <div><h5>Equipo</h5>${credits.slice(0, 3).join("")}</div>
           <div><h5>&nbsp;</h5>${credits.slice(3).join("")}</div>
         </div>
-        <div class="supporters">
-          <span class="eyebrow no-rule">Con el apoyo de</span>
-          <img src="${R("assets/brand/apoyos.png")}" alt="ACOFI – Asociación Colombiana de Facultades de Ingeniería · Consejo Profesional Nacional de Ingenierías Eléctrica, Mecánica y Profesiones Afines · CPG Consejo Profesional de Geología · Pueblo Villano" loading="lazy">
-        </div>
+        ${document.body.dataset.page === "home" ? "" : `<div class="supporters">${apoyosHTML()}</div>`}
         <div class="f-bottom">
           <span>© ${new Date().getFullYear()} Mujeres de Profesión · ISBN ${MDP.site.isbn}</span>
           <span>${MDP.site.domain}</span>
@@ -161,6 +158,17 @@
         <p class="f-legal">Queda prohibida la reproducción, distribución, transformación o uso total o parcial de esta obra (fotografías, textos y diseño) por cualquier medio, sin la autorización previa y por escrito del titular de los derechos de autor. Tu álbum de momentos se guarda únicamente en este navegador.</p>
       </div>`;
     document.body.append(f);
+  }
+
+  /* ---------- Logos de apoyo (pie y franja del inicio) ---------- */
+  function apoyosHTML() {
+    const A = MDP.apoyos || {};
+    return `<span class="eyebrow no-rule">${esc(A.titulo || "Con el apoyo de")}</span>
+      <ul class="apoyos-logos">${(A.logos || []).map((l) =>
+        `<li><img src="${R(l.img)}" alt="${esc(l.alt || "")}" decoding="async"></li>`).join("")}</ul>`;
+  }
+  function renderApoyos() {
+    $$("[data-apoyos]").forEach((el) => { el.innerHTML = `<div class="wrap rv">${apoyosHTML()}</div>`; });
   }
 
   /* =========================================================
@@ -754,6 +762,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     const page = document.body.dataset.page;
     if (window.MDPPages && MDPPages[page]) MDPPages[page]();
+    renderApoyos();
     if (!bare) { renderFooter(); bienvenida(); }
     initReveal();
   });
