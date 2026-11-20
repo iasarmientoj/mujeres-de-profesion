@@ -142,13 +142,13 @@ MDP.pago = {
    demás páginas sigue en el pie. Cada logo es un PNG con fondo
    transparente y todos comparten la misma altura de lienzo,
    así conservan su tamaño relativo.
-   Para el de la Universidad Nacional: guarda el archivo en
-   assets/brand/apoyos/unal.png y quita las // de su línea.
+   El de la Universidad Nacional es la versión monocromática
+   horizontal del logosímbolo, tomada de identidad.unal.edu.co.
    --------------------------------------------------------- */
 MDP.apoyos = {
   titulo: "Con el apoyo de",
   logos: [
-    // { img: "assets/brand/apoyos/unal.png", alt: "Universidad Nacional de Colombia" },
+    { img: "assets/brand/apoyos/unal.png", alt: "Universidad Nacional de Colombia" },
     { img: "assets/brand/apoyos/acofi.png", alt: "ACOFI – Asociación Colombiana de Facultades de Ingeniería" },
     { img: "assets/brand/apoyos/consejo-ingenierias.png", alt: "Consejo Profesional Nacional de Ingenierías Eléctrica, Mecánica y Profesiones Afines" },
     { img: "assets/brand/apoyos/cpg.png", alt: "CPG – Consejo Profesional de Geología" },
