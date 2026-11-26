@@ -130,7 +130,7 @@ MDP.preventa = {
 MDP.pago = {
   activa: true,
   pasarela: "Mercado Pago",
-  link: "https://mpago.li/2FpTV2i",
+  link: "https://mpago.li/1rEMrg9",
   /* Link de monto fijo ($ 100.000, "Fotolibro Mujeres de Profesión").
      Si algún día cambia el precio hay que crear un link nuevo en
      Mercado Pago y pegarlo aquí. El de monto abierto de respaldo
@@ -143,9 +143,10 @@ MDP.pago = {
   titular: "Pueblo Villano S.A.S.",
   nota: "El cobro aparece a nombre de Pueblo Villano S.A.S., la editorial que publica el fotolibro. El pago se hace dentro de Mercado Pago: no almacenamos ningún dato de tu tarjeta.",
   metodos: [
-    "Tarjeta de crédito o débito",
-    "PSE y transferencia bancaria",
-    "Efectivo en Efecty o Baloto",
+    "Tarjeta de crédito, débito o prepago",
+    "PSE",
+    "Transferencia con Bancolombia",
+    "Efectivo en Efecty",
     "Saldo en Mercado Pago"
   ],
   /* Mensaje mientras la pasarela sigue apagada */
