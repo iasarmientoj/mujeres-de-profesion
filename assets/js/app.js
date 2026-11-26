@@ -500,10 +500,29 @@
      oculto (no hace falta servidor). Si falla, ofrece el
      formulario prellenado como respaldo.
      ========================================================= */
+  /* ---------- Medición (Google Analytics 4) ---------- */
+  function initAnalytics() {
+    const A = MDP.analytics || {};
+    if (!A.id || !(A.dominios || []).includes(location.hostname)) return;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag("js", new Date());
+    window.gtag("config", A.id, { allow_google_signals: false, allow_ad_personalization_signals: false });
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(A.id);
+    document.head.append(s);
+  }
+  function medir(evento, datos) {
+    if (window.gtag) window.gtag("event", evento, datos || {});
+  }
+
   const Preventa = {
     open(origen) {
       const P = MDP.preventa || {};
       if (!P.activa) { toast("Muy pronto habilitaremos los pedidos."); return; }
+      medir("abrir_pedido", { origen: origen || "otro" });
+      this.origen = origen || "otro";
       const C = P.campos || {}, G = MDP.pago || {};
       const conPago = !!(G.activa && G.link);
       const body = Modal.open(`
@@ -542,7 +561,9 @@
         err.hidden = true;
         btn.disabled = true; btn.textContent = "Enviando…";
         const datos = { nombre, correo, whatsapp, ciudad, direccion, origen };
-        this.enviar(datos, () => this.gracias(body, P), () => this.respaldo(body, P, datos));
+        this.enviar(datos,
+          () => { medir("pedido_enviado", { origen: this.origen }); this.gracias(body, P); },
+          () => { medir("pedido_respaldo", { origen: this.origen }); this.respaldo(body, P, datos); });
       });
     },
 
@@ -618,6 +639,8 @@
         </div>`;
       const cerrar = $("[data-close]", body);
       if (cerrar) cerrar.onclick = () => Modal.close();
+      const aPagar = pagar && $(".actions a", body);
+      if (aPagar) aPagar.addEventListener("click", () => medir("clic_pagar", { origen: this.origen }));
       const r = $(".box", Modal.el).getBoundingClientRect();
       burst(r.left + r.width / 2, r.top + 120, "var(--gold)");
     },
@@ -755,6 +778,7 @@
   }
 
   /* ---------- Arranque ---------- */
+  initAnalytics();
   if (MDP.espera && MDP.espera.activa) { renderEspera(); return; }
 
   const bare = document.body.dataset.bare === "1";

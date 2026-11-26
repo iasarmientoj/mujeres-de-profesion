@@ -29,6 +29,22 @@ MDP.site = {
    Cuando el libro esté impreso, pon activa: false y el sitio
    vuelve a funcionar completo.
    --------------------------------------------------------- */
+/* ---------------------------------------------------------
+   MEDICIÓN — Google Analytics 4
+   Solo mide en el dominio publicado (no en pruebas locales).
+   Para apagarla: id: "".
+   Eventos propios, además de las visitas:
+     abrir_pedido    se abre el formulario (origen = qué botón)
+     pedido_enviado  los datos del pedido se enviaron
+     pedido_respaldo el envío no se confirmó y se ofreció el formulario
+     clic_pagar      clic en el botón de pago (no confirma el pago)
+   Nunca se envían nombre, correo, teléfono ni dirección.
+   --------------------------------------------------------- */
+MDP.analytics = {
+  id: "G-R9B4SFR58L",
+  dominios: ["mujeresdeprofesion.com", "www.mujeresdeprofesion.com"]
+};
+
 MDP.espera = {
   /* El interruptor está en assets/js/espera.js (se carga antes
      que todo). Aquí solo viven los textos de esa pantalla. */
